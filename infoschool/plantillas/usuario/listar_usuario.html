@@ -54,8 +54,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-    {% ifequal crear_usuarios True %}
         <li><a href="{% url 'nuevo_usuario' %}">Agregar Usuario</a></li>
-    {% endifequal %}
     </ul>
 {% endblock %}
