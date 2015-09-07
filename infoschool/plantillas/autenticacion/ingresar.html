@@ -1,0 +1,23 @@
+{% extends './autenticacion/authbase.html' %}
+{% load staticfiles %}
+<!-- Barra de Título -->
+{% block title %}Bienvenido a INFOSCHOOL! - Iniciar Sesión{% endblock %}
+
+<!-- CSS del Template -->
+{% block css %}
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+<h2 class="form-signin-heading">Scrumban!</h2>
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+    <!-- El formulario se despliega como párrafos y a continuación se despliega el botón para el submit-->
+        {{ formulario.as_p }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+    <!-- Enlace que referencia a recuperar contraseña -->
+    <td><a href="{% url 'principal.views.recuperar_contrasenha' %}" >Recuperar contraseña</a></td>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends './autenticacion/authbase.html' %}
+{% load staticfiles %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL - Usuario no activo!{% endblock %}
+
+<!-- CSS del Template -->
+{% block css %}
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+	<h3>El usuario no esta activo</h3>
+{% endblock %}
+
+<!-- Contenido -->
+<!-- Párrafo con mensaje y botón para volver al inicio de sesión-->
+{% block content %}
+   <p>Contactarse con el administrador, para resolver el problema.</p>
+   <td><a href="{% url 'principal.views.ingresar' %}" class="btn btn-lg btn-primary btn-block" type="button" >Volver</a></td>
+{% endblock %}

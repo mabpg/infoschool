@@ -27,6 +27,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_DIRS = (
+    os.path.join(RUTA_PROYECTO, 'plantillas'),
+)
 
 # Application definition
 
@@ -37,7 +40,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'principal',
     'usuario',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,14 +63,19 @@ WSGI_APPLICATION = 'infoschool.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+"""  'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(RUTA_PROYECTO, 'db.sqlite3'),
+}"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'scrumban',
+        'NAME': 'infoschool',
         'USER': 'scrumban',
         'PASSWORD': 'scrumban',
         'HOST': 'localhost',
-        'PORT':'5432'
+        'PORT': '5432'
     }
 }
 
@@ -88,8 +98,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (
-    os.path.join(RUTA_PROYECTO,  'templates'),
-)
+
 
 AUTH_USER_MODEL = 'usuario.Usuario'

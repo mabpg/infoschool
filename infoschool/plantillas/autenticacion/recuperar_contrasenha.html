@@ -1,0 +1,23 @@
+{% extends './autenticacion/authbase.html' %}
+{% load staticfiles %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL - Recuperar contraseña{% endblock %}
+
+<!-- CSS del Template -->
+{% block css %}
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+	<h3>Recuperación de Contraseña</h3>
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+    <form id='formulario' method='post' action=''>
+		{{formulario.as_p}}
+        <p>El sistema enviará una nueva contraseña a su correo</p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Recuperar Contraseña</button>
+	</form>
+{% endblock %}

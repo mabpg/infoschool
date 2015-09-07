@@ -1,0 +1,21 @@
+{% extends './autenticacion/authbase.html' %}
+{% load staticfiles %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL - Error!{% endblock %}
+
+<!-- CSS del Template -->
+{% block css %}
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+	<h3>ERROR!</h3>
+{% endblock %}
+
+<!-- Contenido -->
+<!-- Párrafo con mensaje y botón para volver a recuperar contraseñas-->
+{% block content %}
+   <p>El usuario no existe</p>
+   <td><a href="{% url 'principal.views.ingresar' %}" class="btn btn-lg btn-primary btn-block" type="button" >Atrás</a></td>
+{% endblock %}
