@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 <!-- Barra de Título -->
-{% block title %}INFOSCHOOL! - Gestión de Usuarios{% endblock %}
+{% block title %}INFOSCHOOL! - Gestión de Alumnos{% endblock %}
 
 <!-- Encabezado-->
 {% block header %}
-<h3 class="page-header">Gestión de Usuarios</h3>
+<h3 class="page-header">Gestión de Alumnos</h3>
 {% endblock %}
 
 <!-- Botones superiores -->
@@ -19,31 +19,29 @@
             <table class="table table-striped table-bordered table-hover" align="center">
                 <theader>
                     <tr>
-                        <th>Nombre de Usuario</th>
+
                         <th>Nombre</th>
                         <th>Apellido </th>
-                        <th>Correo Electronico</th>
-                        <th>Cédula</th>
-                        <th>Teléfono</th>
-                        <th>Dirección</th>
+                        <th>Edad</th>
+                        <th>Direccion</th>
+                        <th>Telefono</th>
+                        <th>Madre</th>
+                        <th>Padre</th>
+
                         <th>Editar</th>
 
-                            <th>Eliminar</th>
+                        <th>Eliminar</th>
 
                     </tr>
                 </theader>
                 <tbody>
                     <ul>
-                    {% for usuario in object_list %}
+                    {% for alumno in object_list %}
                         <tr>
-                            <td>{{ usuario.nombre_usuario }}</td>
-                            <td>{{ usuario.nombre }}</td>
-                            <td>{{ usuario.apellido }}</td>
-                            <td>{{ usuario.correo_electronico }}</td>
-                            <td>{{ usuario.cedula }}</td>
-                            <td>{{ usuario.telefono }}</td>
-                            <td>{{ usuario.direccion }}</td>
-                            <td>{{ usuario.correo_electronico }}</td>
+                            <td> -- </td>
+                            <td> -- </td>
+                            <td>{{ alumno.edad }}</td>
+                            <td>{{ .correo_electronico }}</td>
 
                                 <td><a href="{% url 'editar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
                                 <td><a href="{% url 'borrar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>

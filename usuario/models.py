@@ -39,6 +39,9 @@ class Usuario(AbstractBaseUser):
     nombre = models.CharField(max_length=50, blank=False)
     apellido = models.CharField(max_length=50, blank=False)
     correo_electronico = models.EmailField(max_length=50, blank=False)
+    cedula = models.CharField(max_length=30, blank=False)
+    telefono = models.CharField(max_length=15, blank=True)
+    direccion = models.CharField(max_length=25, blank=False)
     #roles
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
