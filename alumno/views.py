@@ -3,8 +3,7 @@
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
-from usuario.forms import CrearUsuarioForm, EditarUsuarioForm
-from usuario.models import Usuario
+from alumno.forms import CrearAlumnoForm, EditarAlumnoForm
 from alumno.models import Alumno
 
 
@@ -39,7 +38,7 @@ def listar_alumnos(request, template_name='alumno/listar_alumno.html'):
 @login_required
 def nuevo_alumno(request):
     """
-    Vista del formulario de creacion de usuarios. Ver forms.py
+    Vista del formulario de creacion de alumnos. Ver forms.py
     @param request: http request
     Permite crear usuarios a partir de un formulario
     @return Crea un usuario nuevo
@@ -55,24 +54,24 @@ def nuevo_alumno(request):
 
     if crear_usuarios==True:"""
     if request.method=='POST':
-        formulario = CrearUsuarioForm(request.POST)
+        formulario = CrearAlumnoForm(request.POST)
         if formulario.is_valid():
-            usuario = formulario.save()
-            usuario.set_password(usuario.password)
-            usuario.save()
-            return redirect('listar_usuario')
+            alumno = formulario.save()
+            alumno.set_password(alumno.password)
+            alumno.save()
+            return redirect('listar_alumno')
     else:
-        formulario = CrearUsuarioForm()
+        formulario = CrearAlumnoForm()
 
-    return render_to_response('usuario/nuevousuario.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 @login_required
-def editar_usuario(request, pk, template_name='usuario/editar_usuario.html'):
+def editar_alumno(request, pk, template_name='alumno/editar_alumno.html'):
     """
         @param request: http request
-        @param pk: id del usuario a modificar
+        @param pk: id del alumno a modificar
         @param template_name nombre del template a utilizar
-        @result Modifica los campos de un usuario
+        @result Modifica los campos de un alumno
     """
     usuario_actual = request.user
     """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
@@ -82,21 +81,21 @@ def editar_usuario(request, pk, template_name='usuario/editar_usuario.html'):
 
     modificar_usuarios = creacion
     if modificar_usuarios==True:"""
-    usuario = get_object_or_404(Usuario, pk=pk)
-    form = EditarUsuarioForm(request.POST or None, instance=usuario)
+    alumno = get_object_or_404(Alumno, pk=pk)
+    form = EditarAlumnoForm(request.POST or None, instance=alumno)
     if form.is_valid():
         form.save()
-        return redirect('listar_usuario')
-    return render(request, template_name, {'editar_usuario': form})
+        return redirect('listar_alumno')
+    return render(request, template_name, {'editar_alumno': form})
 
 @login_required
-def eliminar_usuario(request, pk, template_name='usuario/eliminar_usuario.html'):
+def eliminar_alumno(request, pk, template_name='alumno/eliminar_alumno.html'):
     """
-    eliminar un usuario
+    eliminar un alumno
     @param request: http request
-    @param pk: id del usuario a eliminar
-    @result Elimina un usuario
-    +Se permite la eliminación de un usuario solo si no está asociado a ningún proyecto (si no posee ningun rol)
+    @param pk: id del alumno a eliminar
+    @result Elimina un alumno
+    +Se permite la eliminación de un alumno solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
     usuario_actual = request.user
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
@@ -105,7 +104,7 @@ def eliminar_usuario(request, pk, template_name='usuario/eliminar_usuario.html')
     creacion = permisos_asociados.eliminar_usuario
     eliminar_usuarios = creacion
     if eliminar_usuarios==True:"""
-    server = get_object_or_404(Usuario, pk=pk)
+    server = get_object_or_404(Alumno, pk=pk)
     """lista_roles_sis = Usuario_Rol_Sistema.objects.filter(usuario = server) #vemos si existen roles de sistema asignado al usuario
     lista_roles_proy = Usuario_Rol_Proyecto.objects.filter(usuario = server) #vemos si existen roles de proyecto asignado al usuario
     count = lista_roles_sis.__len__()
@@ -113,7 +112,7 @@ def eliminar_usuario(request, pk, template_name='usuario/eliminar_usuario.html')
     if count == 0: #si count es igual a cero, entonces el usuario no posee roles asignados"""
     if request.method == 'POST':
         server.delete()
-        return redirect('listar_usuario')
+        return redirect('listar_alumno')
     """else:
         mensaje = "El usuario tiene asignado roles y no puede ser eliminado"
         return render_to_response('usuario/usuario_no_eliminado.html', {'object':mensaje}, context_instance=RequestContext(request))"""

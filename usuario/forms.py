@@ -19,13 +19,17 @@ class CrearUsuarioForm(forms.ModelForm):
     """
     class Meta:
         model = models.Usuario
-        fields = ['nombre_usuario', 'password', 'nombre', 'apellido', 'correo_electronico']
+        fields = ['nombre_usuario', 'password', 'nombre', 'apellido', 'correo_electronico', 'cedula', 'telefono', 'direccion', 'clase']
         widgets = {
             'nombre_usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
             'password': forms.TextInput(attrs={'class': 'form-control', 'type': 'password', 'placeholder': 'Password', 'id': 'inputUserName'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre', 'id': 'inputUserName'}),
             'apellido': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Apellido', 'id': 'inputUserName'}),
             'correo_electronico': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Correo Electronico', 'id': 'inputUserName'}),
+            'cedula': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Cedula', 'id': 'inputUserName'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Telefono', 'id': 'inputUserName'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Direccion', 'id': 'inputUserName'}),
+
         }
         labels = {
             'nombre_usuario': '',
@@ -33,6 +37,10 @@ class CrearUsuarioForm(forms.ModelForm):
             'nombre': '',
             'apellido': '',
             'correo_electronico': '',
+            'cedula': '',
+            'telefono': '',
+            'direccion': '',
+            'clase':'',
         }
 
 class EditarUsuarioForm(forms.ModelForm):

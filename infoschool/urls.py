@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^recuperar/$', recuperar_contrasenha,name='recuperar_contrasenha'),
     #url(r'^home/$', home_sistema, name='home_sistema'),
     url(r'^usuario/', include('usuario.urls')),
+    url(r'^alumno/', include('alumno.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )

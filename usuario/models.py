@@ -34,6 +34,12 @@ class MyUserManager(BaseUserManager):
 
 
 class Usuario(AbstractBaseUser):
+
+    CLASE = (
+        ('Alumno', 'alumno'),
+        ('Profesor', 'profesor'),
+    )
+
     id_usuario = models.AutoField(primary_key=True)
     nombre_usuario = models.CharField(max_length=50, unique=True)
     nombre = models.CharField(max_length=50, blank=False)
@@ -43,6 +49,9 @@ class Usuario(AbstractBaseUser):
     telefono = models.CharField(max_length=15, blank=True)
     direccion = models.CharField(max_length=25, blank=False)
     #roles
+    clase = models.CharField(max_length=10,
+                              choices=CLASE,
+                              default='alumno')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
