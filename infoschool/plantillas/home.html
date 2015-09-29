@@ -11,37 +11,7 @@
 <!-- Contenido -->
 {% block content %}
     <p>Tu administrador de proyectos perfecto.</p>
-    <table class="table table-striped table-bordered table-hover">
-              <tbody>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Fecha de finalizacion</th>
-                    <th>Estado</th>
-                    {% if permiso_ingresar %}
-                        <th></th>
-                    {% endif %}
-                </tr>
 
-
-                <ul>
-                    {% for proyecto in lista_proyectos %}
-                        <tr>
-                        <!--este for es utilizado para verificar si el usuario en cuestion forma parte del equipo del proyecto-->
-                                    <td>{{ proyecto.nombre }}</td>
-                                    <td>{{ proyecto.descripcion }}</td>
-                                    <td>{{ proyecto.fecha_finalizacion }}</td>
-                                    <td>{{ proyecto.estado }}</td>
-                                    {% if permiso_ingresar %}
-                                        <td><a  class="btn btn-primary btn-sm btn-warning" >Ingresar</a></td>
-                                    {% endif %}
-                                </tr>
-                    {% endfor %}
-                        </tr>
-                </ul>
-
-            </tbody>
-           </table>
 
 {% endblock %}
 
@@ -50,8 +20,6 @@
     <ul class="nav nav-sidebar">
 
         <li><a href="{% url 'usuario.views.listar_usuarios' %}">Usuarios</a></li>
-
-
 
         <li><a href="{% url 'listar_alumno' %}">Alumnos</a></li>
 
