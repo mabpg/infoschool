@@ -16,4 +16,4 @@ class Alumno (models.Model):
         db_table = 'alumno'
 
     def __unicode__(self):
-        return self.id_alumno        #cambiar aca este campo
+        return self.usuario.nombre        #cambiar aca este campo

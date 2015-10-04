@@ -4,30 +4,30 @@
 
 <!-- Encabezado-->
 {% block header %}
-<h3 class="page-header">Editar Alumno</h3>
+<h3 class="page-header">Eliminar Alumno</h3>
 {% endblock %}
 
 <!-- Botones superiores -->
 {% block botones %}
-
+<li> </li>
+<li> </li>
+<li> </li>
 {% endblock %}
 
 <!-- Contenido -->
 {% block content %}
-<div class="container">
+    <div class="container">
         <div class="col-md-5">
             <form id='formulario' method='post' action=''>{% csrf_token %}
-            {{formulario.as_p}}
-
-            <select name="usuario">
-                {% for alumno in alumnos %}
-                     <option value="{{alumno.id_alumno}}"> {{alumno.usuario.nombre}} </option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Guardar" />
-            </form>
+                <p>Estas seguro que deseas eliminar el Alumno "{{ object }}" ?</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-danger btn-block" type="submit">Eliminar Alumno</button>
+                    </div>
+                </div>
+	        </form>
         </div>
-</div>
+    </div>
 {% endblock %}
 
 <!-- SideBar -->

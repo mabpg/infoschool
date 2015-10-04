@@ -14,22 +14,26 @@ from alumno.models import Alumno
 
 
 class CrearAlumnoForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CrearAlumnoForm, self).__init__(*args, **kwargs)
     """
-    Form de creacion de usuario
+    Form de creacion de alumno
     """
     class Meta:
-        model = models.Alumno
+        model = Alumno
         fields = ('usuario', 'fecha_nacimiento', )
         widgets = {
-            #'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
+            'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': User, 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
             'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Fecha de Nacimiento', 'id': 'inputUserName'}),
         }
         labels = {
-            'nombre_usuario': '',
-            'fecha_nacimiento': '',
+            'usuario': 'Nombre',
+            'fecha_nacimiento': 'Fecha de Nacimiento',
         }
 
 class EditarAlumnoForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(EditarAlumnoForm, self).__init__(*args, **kwargs)
 
@@ -38,7 +42,7 @@ class EditarAlumnoForm(forms.ModelForm):
         fields = (
         'usuario', 'fecha_nacimiento')
         widgets = {
-            'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
+            #'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
             'fecha_nacimiento': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Fecha Nacimiento', 'id': 'inputUserName'}),
 
         }
@@ -47,6 +51,3 @@ class EditarAlumnoForm(forms.ModelForm):
             'fecha_nacimiento': 'Fecha de Nacimiento',
 
         }
-
-
-

@@ -3,13 +3,14 @@
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
-from alumno.forms import CrearAlumnoForm, EditarAlumnoForm
+from materia.forms import CrearMateriaForm, EditarMateriaForm
 from alumno.models import Alumno
 from usuario.models import Usuario
+from materia.models import Materia
 
 
 @login_required
-def listar_alumnos(request, template_name='alumno/listar_alumno.html'):
+def listar_materias(request, template_name='alumno/listar_materia.html'):
     """
     Lista de alumnos
     @param request: http request
@@ -32,12 +33,12 @@ def listar_alumnos(request, template_name='alumno/listar_alumno.html'):
         data['modificar_usuarios']=modificacion
         data['eliminar_usuarios']=eliminacion
     """
-    alumnos = Alumno.objects.all().order_by('id_alumno') #traemos todos los datos que hay en la tabla Alumno
-    data['object_list'] = alumnos
+    materias = Materia.objects.all().order_by('id_materia') #traemos todos los datos que hay en la tabla Alumno
+    data['object_list'] = materias
     return render(request, template_name, data)
 
 @login_required
-def nuevo_alumno(request):
+def nueva_materia(request):
     """
     Vista del formulario de creacion de alumnos. Ver forms.py
     @param request: http request
@@ -47,15 +48,10 @@ def nuevo_alumno(request):
     correspondiente
     """
     usuario_actual = request.user
-    usuarios = Usuario.objects.all().exclude(clase='Profesor')      #Traemos todos los usuarios que son alumnos
-    alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
-    usuarios_finales = usuarios
-
-    for i in alumnos:
-        usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)
+    profesores = Usuario.objects.all().exclude(clase='Alumno')      #Traemos todos los usuarios que son profesores
 
     data={}
-    data['usuarios'] = usuarios_finales
+    data['profes'] = profesores
 
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     """for i in roles_sistema_usuarios:
@@ -65,20 +61,20 @@ def nuevo_alumno(request):
 
     if crear_usuarios==True:"""
     if request.method=='POST':
-        formulario = CrearAlumnoForm(request.POST)
+        formulario = CrearMateriaForm(request.POST)
         if formulario.is_valid():
-            alumno = formulario.save()
-            alumno.save()
-            return redirect('listar_alumno')
+            materia = formulario.save()
+            materia.save()
+            return redirect('listar_materia')
     else:
-        formulario = CrearAlumnoForm()
+        formulario = CrearMateriaForm()
 
     data['formulario']=formulario
-    return render_to_response('alumno/nuevoalumno.html', data, context_instance=RequestContext(request))
+    return render_to_response('materia/nuevamateria.html', data, context_instance=RequestContext(request))
     #return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario, 'data':data}, context_instance=RequestContext(request))
 
 @login_required
-def editar_alumno(request, pk, template_name='alumno/editar_alumno.html'):
+def editar_materia(request, pk, template_name='materia/editar_materia.html'):
     """
         @param request: http request
         @param pk: id del alumno a modificar
@@ -93,25 +89,15 @@ def editar_alumno(request, pk, template_name='alumno/editar_alumno.html'):
 
     modificar_usuarios = creacion
     if modificar_usuarios==True:"""
-
-    alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
-
-    data={}
-    data['alumnos']=alumnos
-    print('estos son los alumnos')
-    print(alumnos)
-
-    alumno = get_object_or_404(Alumno, pk=pk)
-    form = EditarAlumnoForm(request.POST or None, instance=alumno)
+    materia = get_object_or_404(Materia, pk=pk)
+    form = EditarMateriaForm(request.POST or None, instance=materia)
     if form.is_valid():
         form.save()
-        return redirect('listar_alumno')
-
-    data['formulario'] = form
-    return render(request, template_name, data)
+        return redirect('listar_materia')
+    return render(request, template_name, {'editar_alumno': form})
 
 @login_required
-def eliminar_alumno(request, pk, template_name='alumno/eliminar_alumno.html'):
+def eliminar_materia(request, pk, template_name='materia/eliminar_materia.html'):
     """
     eliminar un alumno
     @param request: http request
@@ -126,7 +112,7 @@ def eliminar_alumno(request, pk, template_name='alumno/eliminar_alumno.html'):
     creacion = permisos_asociados.eliminar_usuario
     eliminar_usuarios = creacion
     if eliminar_usuarios==True:"""
-    server = get_object_or_404(Alumno, pk=pk)
+    server = get_object_or_404(Materia, pk=pk)
     """lista_roles_sis = Usuario_Rol_Sistema.objects.filter(usuario = server) #vemos si existen roles de sistema asignado al usuario
     lista_roles_proy = Usuario_Rol_Proyecto.objects.filter(usuario = server) #vemos si existen roles de proyecto asignado al usuario
     count = lista_roles_sis.__len__()
@@ -134,7 +120,7 @@ def eliminar_alumno(request, pk, template_name='alumno/eliminar_alumno.html'):
     if count == 0: #si count es igual a cero, entonces el usuario no posee roles asignados"""
     if request.method == 'POST':
         server.delete()
-        return redirect('listar_alumno')
+        return redirect('listar_materia')
     """else:
         mensaje = "El usuario tiene asignado roles y no puede ser eliminado"
         return render_to_response('usuario/usuario_no_eliminado.html', {'object':mensaje}, context_instance=RequestContext(request))"""
