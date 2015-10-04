@@ -17,13 +17,19 @@
 {% block content %}
     <div class="container">
         <div class="col-md-5">
-            <form id='formulario' method='post' action=''>{% csrf_token %}
-            {{formulario.as_p}}
-                <div class="row">
-                    <div class="col-md-4">
-                            <button class="btn btn-primary btn-block" type="submit">Crear Alumno</button>
-                    </div>
-                </div>
+
+            <form action="{% url 'nuevo_alumno' %}" method="POST" >{% csrf_token %}
+
+                <select name="usuario">
+                    {% for usu in usuarios_f %}
+                        <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
+                    {% endfor %}
+                </select>
+                {{formulario.as_p}}
+
+                <!-- boton Submit: Envia el formulario -->
+
+             <input type="submit" value="Guardar" />
             </form>
         </div>
     </div>

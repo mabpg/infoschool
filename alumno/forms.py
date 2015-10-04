@@ -19,10 +19,10 @@ class CrearAlumnoForm(forms.ModelForm):
     """
     class Meta:
         model = models.Alumno
-        fields = ['usuario', 'fecha_nacimiento']
+        fields = ('usuario', 'fecha_nacimiento', )
         widgets = {
-            'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
-            'fecha_nacimiento': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Fecha de Nacimiento', 'id': 'inputUserName'}),
+            #'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Fecha de Nacimiento', 'id': 'inputUserName'}),
         }
         labels = {
             'nombre_usuario': '',

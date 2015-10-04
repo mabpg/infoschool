@@ -51,7 +51,7 @@ class Usuario(AbstractBaseUser):
     #roles
     clase = models.CharField(max_length=10,
                               choices=CLASE,
-                              default='alumno')
+                              default='Alumno')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

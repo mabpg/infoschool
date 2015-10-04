@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from alumno.forms import CrearAlumnoForm, EditarAlumnoForm
 from alumno.models import Alumno
+from usuario.models import Usuario
 
 
 @login_required
@@ -46,6 +47,16 @@ def nuevo_alumno(request):
     correspondiente
     """
     usuario_actual = request.user
+    usuarios = Usuario.objects.all().exclude(clase='Profesor')      #Traemos todos los usuarios que son alumnos
+    alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
+    usuarios_finales = usuarios
+
+    for i in alumnos:
+        usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)
+
+    data={}
+    data['usuarios_f'] = usuarios_finales
+
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     """for i in roles_sistema_usuarios:
         permisos_asociados = i.roles.permiso_sistema
@@ -57,13 +68,13 @@ def nuevo_alumno(request):
         formulario = CrearAlumnoForm(request.POST)
         if formulario.is_valid():
             alumno = formulario.save()
-            alumno.set_password(alumno.password)
             alumno.save()
             return redirect('listar_alumno')
     else:
         formulario = CrearAlumnoForm()
 
-    return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+    return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario, 'data':data}, context_instance=RequestContext(request))
 
 @login_required
 def editar_alumno(request, pk, template_name='alumno/editar_alumno.html'):
