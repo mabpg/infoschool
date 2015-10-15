@@ -33,7 +33,7 @@ class EditarMateriaForm(forms.ModelForm):
     class Meta:
         model = Materia
         fields = (
-        'nombre', 'profesor')
+        'nombre', )
         """widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de la materia', 'id': 'inputUserName'}),
             'profesor': forms.TextInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Profesor', 'id': 'inputUserName'}),

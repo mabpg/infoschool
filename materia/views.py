@@ -93,12 +93,20 @@ def editar_materia(request, pk, template_name='materia/editar_materia.html'):
 
     modificar_usuarios = creacion
     if modificar_usuarios==True:"""
+
+    profesores = Usuario.objects.all().exclude(clase='Alumno')      #Traemos todos los usuarios que son profesores
+
+    data={}
+    data['profes'] = profesores
     materia = get_object_or_404(Materia, pk=pk)
     form = EditarMateriaForm(request.POST or None, instance=materia)
     if form.is_valid():
         form.save()
         return redirect('listar_materia')
-    return render(request, template_name, {'editar_materia': form})
+
+    data['formulario'] = form
+    return render(request, template_name, data)
+
 
 @login_required
 def eliminar_materia(request, pk, template_name='materia/eliminar_materia.html'):

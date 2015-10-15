@@ -17,12 +17,20 @@
 <div class="container">
         <div class="col-md-5">
             <form id='formulario' method='post' action=''>{% csrf_token %}
-            {{editar_materia.as_p}}
-                <div class="row">
-                    <div class="col-md-4">
-                            <button class="btn btn-primary btn-block" type="submit">Editar Materia</button>
-                    </div>
-                </div>
+
+                {{formulario.as_p}}
+
+                <strong>Profesor:</strong>
+                <select name="profesor">
+                    {% for usu in profes %}
+                        <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+
+                <!-- boton Submit: Envia el formulario -->
+
+             <input type="submit" value="Guardar" />
             </form>
         </div>
 </div>
