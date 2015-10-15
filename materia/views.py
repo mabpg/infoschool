@@ -4,13 +4,12 @@ from django.shortcuts import render_to_response, RequestContext, get_object_or_4
 from django.contrib.auth.decorators import login_required
 
 from materia.forms import CrearMateriaForm, EditarMateriaForm
-from alumno.models import Alumno
 from usuario.models import Usuario
 from materia.models import Materia
 
 
 @login_required
-def listar_materias(request, template_name='alumno/listar_materia.html'):
+def listar_materias(request, template_name='materia/listar_materia.html'):
     """
     Lista de alumnos
     @param request: http request
@@ -63,13 +62,18 @@ def nueva_materia(request):
     if request.method=='POST':
         formulario = CrearMateriaForm(request.POST)
         if formulario.is_valid():
+
+            id_usuario_profesor = request.POST['profesor']
+            usuario = Usuario.objects.get(id_usuario=id_usuario_profesor)
             materia = formulario.save()
+            materia.profesor=usuario
             materia.save()
+
             return redirect('listar_materia')
     else:
         formulario = CrearMateriaForm()
 
-    data['formulario']=formulario
+    data['formulario'] = formulario
     return render_to_response('materia/nuevamateria.html', data, context_instance=RequestContext(request))
     #return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario, 'data':data}, context_instance=RequestContext(request))
 
@@ -94,7 +98,7 @@ def editar_materia(request, pk, template_name='materia/editar_materia.html'):
     if form.is_valid():
         form.save()
         return redirect('listar_materia')
-    return render(request, template_name, {'editar_alumno': form})
+    return render(request, template_name, {'editar_materia': form})
 
 @login_required
 def eliminar_materia(request, pk, template_name='materia/eliminar_materia.html'):

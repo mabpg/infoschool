@@ -17,13 +17,16 @@
 <div class="container">
         <div class="col-md-5">
             <form id='formulario' method='post' action=''>{% csrf_token %}
-            {{formulario.as_p}}
 
+            Alumno:
             <select name="usuario">
                 {% for alumno in alumnos %}
                      <option value="{{alumno.id_alumno}}"> {{alumno.usuario.nombre}} </option>
                 {% endfor %}
             </select>
+
+                {{formulario.as_p}}
+
             <input type="submit" value="Guardar" />
             </form>
         </div>

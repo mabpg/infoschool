@@ -5,7 +5,7 @@ class Materia (models.Model):
 
     id_materia = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50, blank=False)
-    profesor = models.ForeignKey(Usuario, null=False, blank=False)
+    profesor = models.ForeignKey(Usuario, null=True, blank=True)
 
 
     class Meta:

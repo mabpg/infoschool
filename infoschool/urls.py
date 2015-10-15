@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^home/$', home_sistema, name='home_sistema'),
     url(r'^usuario/', include('usuario.urls')),
     url(r'^alumno/', include('alumno.urls')),
+    url(r'^materia/', include('materia.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )

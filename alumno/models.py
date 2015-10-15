@@ -4,7 +4,7 @@ from usuario.models import Usuario
 class Alumno (models.Model):
 
     id_alumno = models.AutoField(primary_key=True)
-    usuario = models.ForeignKey(Usuario, blank=False, null=False)
+    usuario = models.ForeignKey(Usuario, blank=True, null=True)
 
     fecha_nacimiento = models.DateTimeField(null=False)
 

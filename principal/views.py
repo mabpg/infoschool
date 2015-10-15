@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from principal.forms import RecuperarForm, AutenticarForm
 from usuario.models import Usuario
+from materia.models import Materia
 
 def ingresar(request):
     """
@@ -174,9 +175,10 @@ def home_sistema(request):
     #data['permiso_ingresar']=creacion or modificacion
     #data['mostrar']=usuarios
 
+    #lista_proyectos=Materia.objects.all()
     #data['lista_proyectos']=lista_proyectos
-    template_name='home.html'
-    return render(request,template_name, data)
+    template_name = 'home.html'
+    return render(request, template_name, data)
 
 
 

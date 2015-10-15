@@ -48,14 +48,22 @@ def nuevo_alumno(request):
     """
     usuario_actual = request.user
     usuarios = Usuario.objects.all().exclude(clase='Profesor')      #Traemos todos los usuarios que son alumnos
+    print('alumnos en usuarios')
+    print(usuarios)
     alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
-    usuarios_finales = usuarios
+    print('tabla alumnos')
+    print(alumnos)
+    usuarios_finales = list(usuarios)
 
     for i in alumnos:
         usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)
 
-    data={}
-    data['usuarios'] = usuarios_finales
+    data = {}
+    if usuarios_finales.__len__()<0:
+        data['mensaje'] = 'No hay usuarios sin ser alumnos'
+    data['usuarios'] = list(usuarios_finales)
+    print('usuarios')
+    print(usuarios_finales)
 
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     """for i in roles_sistema_usuarios:
@@ -67,7 +75,10 @@ def nuevo_alumno(request):
     if request.method=='POST':
         formulario = CrearAlumnoForm(request.POST)
         if formulario.is_valid():
+            id_usuario_alumno = request.POST['usuario']
+            usuario = Usuario.objects.get(id_usuario=id_usuario_alumno)
             alumno = formulario.save()
+            alumno.usuario=usuario
             alumno.save()
             return redirect('listar_alumno')
     else:

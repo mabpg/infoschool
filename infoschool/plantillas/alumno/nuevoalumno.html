@@ -20,14 +20,13 @@
 
             <form action="{% url 'nuevo_alumno' %}" method="POST" >{% csrf_token %}
 
-                {{formulario.as_p}}
-
+               <strong>Alumno:</strong>
                 <select name="usuario">
-                    {% for usuario in usuarios %}
-                        <option value="{{usuario.id_usuario}}"> {{usuario.nombre}} </option>
+                    {% for usu in usuarios %}
+                        <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
                     {% endfor %}
                 </select>
-
+                {{formulario.as_p}}
 
                 <!-- boton Submit: Envia el formulario -->
 

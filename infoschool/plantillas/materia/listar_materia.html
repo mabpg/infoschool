@@ -30,13 +30,13 @@
                 </theader>
                 <tbody>
                     <ul>
-                    {% for alumno in object_list %}
+                    {% for materia in object_list %}
                         <tr>
-                            <td> {{ alumno.nombre }}</td>
-                            <td> {{ alumno.profesor.nombre }} </td>
+                            <td> {{ materia.nombre }}</td>
+                            <td> {{ materia.profesor.nombre }} </td>
 
-                            <td><a href="{% url 'editar_materia' %}" class="btn btn-primary btn-sm" >editar</a></td>
-                            <td><a href="{% url 'borrar_materia' %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
+                            <td><a href="{% url 'editar_materia' materia.id_materia%}" class="btn btn-primary btn-sm" >editar</a></td>
+                            <td><a href="{% url 'borrar_materia' materia.id_materia%}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
 
                         </tr>
                     {% endfor %}
