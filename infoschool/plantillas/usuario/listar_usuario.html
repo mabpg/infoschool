@@ -42,7 +42,6 @@
                             <td>{{ usuario.cedula }}</td>
                             <td>{{ usuario.telefono }}</td>
                             <td>{{ usuario.direccion }}</td>
-                            <td>{{ usuario.correo_electronico }}</td>
 
                                 <td><a href="{% url 'editar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
                                 <td><a href="{% url 'borrar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
