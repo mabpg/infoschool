@@ -1,6 +1,6 @@
 from django.db import models
 from usuario.models import Usuario
-from curso.models import Curso
+#from curso.models import Curso
 
 class Alumno (models.Model):
 
@@ -21,7 +21,7 @@ class Alumno (models.Model):
 
 
 
-class CursoAlumno (models.Model):
+""" class CursoAlumno (models.Model):
 
     id_curso_alumno = models.AutoField(primary_key=True)
     curso = models.ForeignKey(Curso, blank=True, null=True)
@@ -31,4 +31,4 @@ class CursoAlumno (models.Model):
         db_table = 'curso_alumno'
 
     def __unicode__(self):
-        return self.curso
+        return self.curso"""

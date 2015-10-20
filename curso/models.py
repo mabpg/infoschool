@@ -2,8 +2,6 @@ from django.db import models
 
 class Curso (models.Model):
 
-    id_curso = models.AutoField(primary_key=True)
-
     CURSO = (
         ('Septimo', 'septimo'),
         ('Octavo', 'octavo'),
@@ -36,11 +34,23 @@ class Curso (models.Model):
         ('Quimica', 'quimica'),
         ('Salud', 'salud'),
     )
-    nombre = models.CharField(max_length=15, choices=CURSO, default='Septimo')
-    seccion = models.CharField(max_length=15, choices=SECCION, default='Primera')
-    turno = models.CharField(max_length=10, choiches=TURNO, default='Manana')
-    especialidad = models.CharField(max_length=10, choiches=ESPECIALIDAD, default='Basica')
+    id_curso = models.AutoField(primary_key=True)
 
+    nombre = models.CharField(max_length=18,
+                              choices=CURSO,
+                              default='Septimo')
+
+    seccion = models.CharField(max_length=18,
+                               choices=SECCION,
+                               default='Primera')
+
+    turno = models.CharField(max_length=18,
+                             choices=TURNO,
+                             default='Manana')
+
+    especialidad = models.CharField(max_length=18,
+                                    choices=ESPECIALIDAD,
+                                    default='EEB')
 
     class Meta:
         db_table = 'curso'

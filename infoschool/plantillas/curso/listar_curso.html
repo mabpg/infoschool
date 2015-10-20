@@ -24,6 +24,8 @@
                         <th>Sección</th>
                         <th>Turno</th>
                         <th>Especialidad</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
 
                     </tr>
                 </theader>
@@ -37,8 +39,8 @@
                             <td>{{ curso.especialidad }}</td>
 
 
-                                <td><a href="{% url 'editar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
-                                <td><a href="{% url 'borrar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
+                                <td><a href="{% url 'editar_curso' curso.id_curso %}" class="btn btn-primary btn-sm" >editar</a></td>
+                                <td><a href="{% url 'borrar_curso' curso.id_curso %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
 
                         </tr>
                     {% endfor %}
@@ -52,6 +54,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a href="{% url 'nuevo_usuario' %}">Agregar Usuario</a></li>
+        <li><a href="{% url 'nuevo_curso' %}">Agregar Curso</a></li>
     </ul>
 {% endblock %}

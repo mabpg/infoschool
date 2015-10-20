@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 <!-- Barra de Título -->
-{% block title %}INFOSCHOOL! - Gestión de Materias{% endblock %}
+{% block title %}INFOSCHOOL! - Gestión de Cursos{% endblock %}
 
 <!-- Encabezado-->
 {% block header %}
-<h3 class="page-header">Registrar Materia</h3>
+<h3 class="page-header">Registrar Curso</h3>
 {% endblock %}
 
 <!-- Botones superiores -->
@@ -18,17 +18,10 @@
     <div class="container">
         <div class="col-md-5">
 
-            <form action="{% url 'nueva_materia' %}" method="POST" >{% csrf_token %}
+
+            <form id='formulario' method='post' action=''>{% csrf_token %}
 
                 {{formulario.as_p}}
-
-                <strong>Profesor:</strong>
-                <select name="profesor">
-                    {% for usu in profes %}
-                        <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
-                    {% endfor %}
-                </select>
-                <br><br>
 
                 <!-- boton Submit: Envia el formulario -->
 
@@ -41,6 +34,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a type="button" href="{% url 'listar_materia' %}">Cancelar</a></li>
+        <li><a type="button" href="{% url 'listar_curso' %}">Cancelar</a></li>
     </ul>
 {% endblock %}

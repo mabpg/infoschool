@@ -3,9 +3,7 @@
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
-from materia.forms import CrearMateriaForm, EditarMateriaForm
-from usuario.models import Usuario
-from materia.models import Materia
+from curso.forms import CrearCursoForm, EditarCursoForm
 from curso.models import Curso
 
 
@@ -58,22 +56,16 @@ def nuevo_curso(request):
 
     if crear_usuarios==True:"""
     if request.method=='POST':
-        formulario = CrearMateriaForm(request.POST)
+        formulario = CrearCursoForm(request.POST)
         if formulario.is_valid():
-
-            id_usuario_profesor = request.POST['profesor']
-            usuario = Usuario.objects.get(id_usuario=id_usuario_profesor)
-            materia = formulario.save()
-            materia.profesor=usuario
-            materia.save()
-
+            formulario.save()
             return redirect('listar_curso')
     else:
-        formulario = CrearMateriaForm()
+        formulario = CrearCursoForm()
 
     data['formulario'] = formulario
     return render_to_response('curso/nuevocurso.html', data, context_instance=RequestContext(request))
-    #return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario, 'data':data}, context_instance=RequestContext(request))
+
 
 @login_required
 def editar_curso(request, pk, template_name='curso/editar_curso.html'):
@@ -92,15 +84,13 @@ def editar_curso(request, pk, template_name='curso/editar_curso.html'):
     modificar_usuarios = creacion
     if modificar_usuarios==True:"""
 
-    profesores = Usuario.objects.all().exclude(clase='Alumno')      #Traemos todos los usuarios que son profesores
-
     data={}
-    data['profes'] = profesores
-    materia = get_object_or_404(Materia, pk=pk)
-    form = EditarMateriaForm(request.POST or None, instance=materia)
+
+    curso = get_object_or_404(Curso, pk=pk)
+    form = EditarCursoForm(request.POST or None, instance=curso)
     if form.is_valid():
         form.save()
-        return redirect('listar_materia')
+        return redirect('listar_curso')
 
     data['formulario'] = form
     return render(request, template_name, data)
@@ -122,7 +112,7 @@ def eliminar_curso(request, pk, template_name='curso/eliminar_curso.html'):
     creacion = permisos_asociados.eliminar_usuario
     eliminar_usuarios = creacion
     if eliminar_usuarios==True:"""
-    server = get_object_or_404(Materia, pk=pk)
+    server = get_object_or_404(Curso, pk=pk)
     """lista_roles_sis = Usuario_Rol_Sistema.objects.filter(usuario = server) #vemos si existen roles de sistema asignado al usuario
     lista_roles_proy = Usuario_Rol_Proyecto.objects.filter(usuario = server) #vemos si existen roles de proyecto asignado al usuario
     count = lista_roles_sis.__len__()
@@ -130,7 +120,7 @@ def eliminar_curso(request, pk, template_name='curso/eliminar_curso.html'):
     if count == 0: #si count es igual a cero, entonces el usuario no posee roles asignados"""
     if request.method == 'POST':
         server.delete()
-        return redirect('listar_materia')
+        return redirect('listar_curso')
     """else:
         mensaje = "El usuario tiene asignado roles y no puede ser eliminado"
         return render_to_response('usuario/usuario_no_eliminado.html', {'object':mensaje}, context_instance=RequestContext(request))"""
