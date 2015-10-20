@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL! - Gestión de Anotaciones{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+<h3 class="page-header">Gestión de Anotaciones</h3>
+{% endblock %}
+
+<!-- Botones superiores -->
+{% block botones %}
+
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+    <div class="row placeholders">
+        <div>
+            <table class="table table-striped table-bordered table-hover" align="center">
+                <theader>
+                    <tr>
+
+                        <th>Nombre</th>
+                         <th>Curso</th>
+                        <th>Materia</th>
+                        <th>Fecha</th>
+
+                    </tr>
+                </theader>
+                <tbody>
+                    <ul>
+                    {% for anotacion in object_list %}
+                        <tr>
+                            <td>{{ anotacion.nombre }}</td>
+                            <td>{{ anotacion.curso}}</td>
+                            <td>{{ anotacion.materia }}</td>
+                            <td>{{ anotacion.fecha }}</td>
+
+
+                                <td><a href="{% url 'editar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
+                                <td><a href="{% url 'borrar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
+
+                        </tr>
+                    {% endfor %}
+                    </ul>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- SideBar -->
+{% block sidebar %}
+    <ul class="nav nav-sidebar">
+        <li><a href="{% url 'nuevo_usuario' %}">Agregar Usuario</a></li>
+    </ul>
+{% endblock %}

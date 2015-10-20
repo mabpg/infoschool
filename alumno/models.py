@@ -1,5 +1,6 @@
 from django.db import models
 from usuario.models import Usuario
+from curso.models import Curso
 
 class Alumno (models.Model):
 
@@ -17,3 +18,17 @@ class Alumno (models.Model):
 
     def __unicode__(self):
         return self.usuario.nombre        #cambiar aca este campo
+
+
+
+class CursoAlumno (models.Model):
+
+    id_curso_alumno = models.AutoField(primary_key=True)
+    curso = models.ForeignKey(Curso, blank=True, null=True)
+    alumno = models.ForeignKey(Alumno, blank=True, null=True)
+
+    class Meta:
+        db_table = 'curso_alumno'
+
+    def __unicode__(self):
+        return self.curso

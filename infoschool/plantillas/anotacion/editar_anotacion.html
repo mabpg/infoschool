@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL! - Gestión de Alumnos{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+<h3 class="page-header">Editar Alumno</h3>
+{% endblock %}
+
+<!-- Botones superiores -->
+{% block botones %}
+
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<div class="container">
+        <div class="col-md-5">
+            <form id='formulario' method='post' action=''>{% csrf_token %}
+
+            Alumno:
+            <select name="usuario">
+                {% for alumno in alumnos %}
+                     <option value="{{alumno.id_alumno}}"> {{alumno.usuario.nombre}} </option>
+                {% endfor %}
+            </select>
+
+                {{formulario.as_p}}
+
+            <input type="submit" value="Guardar" />
+            </form>
+        </div>
+</div>
+{% endblock %}
+
+<!-- SideBar -->
+{% block sidebar %}
+    <ul class="nav nav-sidebar">
+        <li><a type="button" href="{% url 'listar_alumno' %}">Cancelar</a></li>
+    </ul>
+{% endblock %}
