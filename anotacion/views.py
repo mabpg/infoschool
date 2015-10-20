@@ -4,9 +4,9 @@ from django.shortcuts import render_to_response, RequestContext, get_object_or_4
 from django.contrib.auth.decorators import login_required
 
 from anotacion.forms import CrearAnotacionForm, EditarAnotacionForm
-from curso.models import Curso
 from materia.models import Materia
 from anotacion.models import Anotacion
+from alumno.models import Alumno
 
 @login_required
 def listar_anotaciones(request, template_name='anotacion/listar_anotacion.html'):
@@ -48,10 +48,10 @@ def nueva_anotacion(request):
     """
     data = {}
     usuario_actual = request.user
-    cursos = Curso.objects.all()      #Traemos todos los cursos
-    data['cursos'] = list(cursos)
+    alumnos = Alumno.objects.all()      #Traemos todos los alumnos
+    data['alumnos'] = list(alumnos)
 
-    materias = Materia.objects.all()                                  #traemos todos los elementos de la tabla alumno
+    materias = Materia.objects.all()
 
     materias_finales = list(materias)
 
@@ -73,13 +73,13 @@ def nueva_anotacion(request):
     if request.method=='POST':
         formulario = CrearAnotacionForm(request.POST)
         if formulario.is_valid():
-            id_curso = request.POST['curso']
-            curso = Curso.objects.get(id_curso=id_curso)
-            id_materia = request.POST['materia']
-            materia = Materia.objects.get(id_materia=id_materia)
+            id_alumno = request.POST['alumno']
+            alumno = Alumno.objects.get(id_alumno=id_alumno)
+            #id_materia = request.POST['materia']
+            #materia = Materia.objects.get(id_materia=id_materia)
             form = formulario.save()
-            form.curso=curso
-            form.materia=materia
+            form.alumno=alumno
+            #form.materia=materia
             form.save()
             return redirect('listar_anotacion')
     else:
@@ -87,6 +87,18 @@ def nueva_anotacion(request):
 
     data['formulario']=formulario
     return render_to_response('anotacion/nuevaanotacion.html', data, context_instance=RequestContext(request))
+
+@login_required
+def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_anotacion.html'):
+    """
+            @param request: http request
+            @param pk: id de la anotacion
+            @param template_name nombre del template a utilizar
+            @result Modifica los campos de un alumno
+    """
+    anotacion = Anotacion.objects.get(id_anotacion=pk)
+    curso=anotacion.alumno.curso
+
 
 @login_required
 def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html'):
@@ -106,10 +118,10 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
     modificar_usuarios = creacion
     if modificar_usuarios==True:"""
 
-    cursos = Curso.objects.all()      #Traemos todos los cursos
-    data['cursos'] = list(cursos)
+    alumnos = Alumno.objects.all()      #Traemos todos los alumnos
+    data['alumnos'] = list(alumnos)
 
-    materias = Materia.objects.all()                                  #traemos todos los elementos de la tabla alumno
+    materias = Materia.objects.all()
 
     materias_finales = list(materias)
 

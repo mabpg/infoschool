@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+<!-- Barra de Título -->
+{% block title %}SCRUMBAN! - Gestión de Materias{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+<h3 class="page-header">Asignar Materia</h3>
+{% endblock %}
+
+<!-- Botones superiores -->
+{% block botones %}
+
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+
+        <!-- Formulario -->
+        <form action="{% url 'asignar_materia_curso' materia  %}" method="POST" >{% csrf_token %}
+            <br>
+            <br>
+            <strong>Curso:</strong>
+            <select name="curso">
+                {% for cur in cursos %}
+
+                        <option value="{{cur.id_curso}}">{{cur.nombre}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <br>
+            <!-- boton Submit: Envia el formulario -->
+            <input type="submit" value="Guardar" />
+        </form>
+
+{% endblock %}
+
+<!-- SideBar -->
+{% block sidebar %}
+    <ul class="nav nav-sidebar">
+        <li class="active"><a href="{% url 'listar_materia' %}">Cancelar</a></li>
+    </ul>
+{% endblock %}

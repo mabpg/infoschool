@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 
-from materia.views import listar_materias, nueva_materia, editar_materia, eliminar_materia
+from materia.views import listar_materias, nueva_materia, editar_materia, eliminar_materia, asignar_materia_curso
 
 
 urlpatterns = patterns('',
@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^nuevo$', nueva_materia, name='nueva_materia'),
     url(r'^editar/(?P<pk>\d+)$', editar_materia, name='editar_materia'),
     url(r'^borrar/(?P<pk>\d+)$', eliminar_materia, name='borrar_materia'),
+    url(r'^asignar/(?P<pk>\d+)$', asignar_materia_curso, name='asignar_materia_curso'),
 
 )

@@ -21,10 +21,10 @@
 
                 {{formulario.as_p}}
 
-               <strong>Curso:</strong>
-                <select name="curso">
-                    {% for cur in cursos %}
-                        <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
+                <strong>Alumno:</strong>
+                <select name="alumno">
+                    {% for al in alumnos %}
+                        <option value="{{al.id_alumno}}"> {{al.usuario.nombre}} </option>
                     {% endfor %}
                 </select>
                 <br><br>

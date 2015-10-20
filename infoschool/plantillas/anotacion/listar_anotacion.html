@@ -21,7 +21,9 @@
                     <tr>
 
                         <th>Nombre</th>
-                         <th>Curso</th>
+                        <th>Descripción</th>
+                        <th>Alumno</th>
+                        <th>Curso</th>
                         <th>Materia</th>
                         <th>Fecha</th>
                         <th>Editar</th>
@@ -34,7 +36,9 @@
                     {% for anotacion in object_list %}
                         <tr>
                             <td>{{ anotacion.nombre }}</td>
-                            <td>{{ anotacion.curso}}</td>
+                            <td>{{ anotacion.descripcion}}</td>
+                            <td>{{ anotacion.alumno.usuario.nombre}}</td>
+                            <td>{{ anotacion.alumno.curso}}</td>
                             <td>{{ anotacion.materia }}</td>
                             <td>{{ anotacion.fecha }}</td>
 

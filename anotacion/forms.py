@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
-from django import forms
 
-from alumno.models import Alumno
+from django import forms
 from anotacion.models import Anotacion
 
 
@@ -35,15 +33,3 @@ class EditarAnotacionForm(forms.ModelForm):
         model = Anotacion
         fields = (
         'nombre', 'descripcion', )
-        widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de la anotacion', 'id': 'inputUserName'}),
-            'descripcion': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Descripcion de la anotacion', 'id': 'inputUserName'}),
-
-        }
-        labels = {
-            'nombre': 'Nombre',
-            'descripcion': 'Descripcion',
-            'curso': 'Curso',
-            'materia': 'Materia',
-
-        }

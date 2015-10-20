@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
+
 from django import forms
 
-from materia.models import Materia
+from materia.models import Materia, Materia_curso
 
 
 
@@ -34,13 +34,12 @@ class EditarMateriaForm(forms.ModelForm):
         model = Materia
         fields = (
         'nombre', )
-        """widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de la materia', 'id': 'inputUserName'}),
-            'profesor': forms.TextInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Profesor', 'id': 'inputUserName'}),
 
-        }
-        labels = {
-            'usuario': 'Nombre',
-            'profesor': 'Profesor',
+class AsignarMateriaCursoForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AsignarMateriaCursoForm, self).__init__(*args, **kwargs)
 
-        }"""
+    class Meta:
+        model = Materia_curso
+        fields = (
+        'curso', 'materia')

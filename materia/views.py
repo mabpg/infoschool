@@ -3,10 +3,10 @@
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
-from materia.forms import CrearMateriaForm, EditarMateriaForm
+from materia.forms import CrearMateriaForm, EditarMateriaForm, AsignarMateriaCursoForm
 from usuario.models import Usuario
 from materia.models import Materia
-
+from curso.models import Curso
 
 @login_required
 def listar_materias(request, template_name='materia/listar_materia.html'):
@@ -138,5 +138,31 @@ def eliminar_materia(request, pk, template_name='materia/eliminar_materia.html')
         return render_to_response('usuario/usuario_no_eliminado.html', {'object':mensaje}, context_instance=RequestContext(request))"""
 
     return render(request, template_name, {'object': server})
+
+@login_required
+def asignar_materia_curso(request, pk, template_name='materia/asignar_materia_curso.html'):
+
+    """
+        Asignar roles a usuarios
+        @param request: http request
+        @param pk: id de la materia a asignar
+        @param template_name nombre del template a utilizar
+        @return asigna roles a un usuario
+        + Se asignan roles de sistema a un usuario, Un mismo usuario no puede asignarse roles a sí mismo
+    """
+    materia = get_object_or_404(Materia, id_materia=pk)
+    data={}
+    data['materia']=pk
+    formulario = AsignarMateriaCursoForm(request.POST or None)
+
+    todos_cursos = Curso.objects.all()
+    data['cursos'] = todos_cursos
+    if formulario.is_valid():
+        form = formulario.save()
+        form.materia = materia
+        form.save()
+        return redirect('listar_materia')
+
+    return render(request, template_name, data)
 
 

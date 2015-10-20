@@ -21,7 +21,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Profesor </th>
-
+                        <th>Asignar </th>
                         <th>Editar</th>
 
                         <th>Eliminar</th>
@@ -34,7 +34,7 @@
                         <tr>
                             <td> {{ materia.nombre }}</td>
                             <td> {{ materia.profesor.nombre }} </td>
-
+                            <td><a href="{% url 'asignar_materia_curso' materia.id_materia%}" class="btn btn-primary btn-sm" >asignar</a></td>
                             <td><a href="{% url 'editar_materia' materia.id_materia%}" class="btn btn-primary btn-sm" >editar</a></td>
                             <td><a href="{% url 'borrar_materia' materia.id_materia%}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
 
