@@ -18,14 +18,22 @@
         <div class="col-md-5">
             <form id='formulario' method='post' action=''>{% csrf_token %}
 
-            Alumno:
+            <strong>Alumno:</strong>
             <select name="usuario">
                 {% for alumno in alumnos %}
                      <option value="{{alumno.id_alumno}}"> {{alumno.usuario.nombre}} </option>
                 {% endfor %}
             </select>
+            <br><br>
+            <strong>Curso:</strong>
+                <select name="curso">
+                    {% for cur in cursos %}
+                        <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
+                    {% endfor %}
+                </select>
+            <br><br>
 
-                {{formulario.as_p}}
+            {{formulario.as_p}}
 
             <input type="submit" value="Guardar" />
             </form>

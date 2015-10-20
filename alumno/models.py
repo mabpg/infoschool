@@ -1,6 +1,6 @@
 from django.db import models
 from usuario.models import Usuario
-#from curso.models import Curso
+from curso.models import Curso
 
 class Alumno (models.Model):
 
@@ -9,7 +9,7 @@ class Alumno (models.Model):
 
     fecha_nacimiento = models.DateTimeField(null=False)
 
-    ##curso = models.ForeignKey(Curso, blank=False, null=False)
+    curso = models.ForeignKey(Curso, blank=True, null=True)
     #padre = models.ForeignKey(Padre)
     #madre = models.ForeignKey(Padre)
 

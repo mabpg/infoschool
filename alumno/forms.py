@@ -43,7 +43,7 @@ class EditarAlumnoForm(forms.ModelForm):
         'fecha_nacimiento',)
         widgets = {
             #'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
-            'fecha_nacimiento': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Fecha Nacimiento', 'id': 'inputUserName'}),
+            'fecha_nacimiento': forms.TextInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Fecha Nacimiento', 'id': 'inputUserName'}),
 
         }
         labels = {
