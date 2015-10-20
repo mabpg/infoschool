@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 <!-- Barra de Título -->
-{% block title %}INFOSCHOOL! - Gestión de Alumnos{% endblock %}
+{% block title %}INFOSCHOOL! - Gestión de Anotaciones{% endblock %}
 
 <!-- Encabezado-->
 {% block header %}
-<h3 class="page-header">Eliminar Alumno</h3>
+<h3 class="page-header">Eliminar Anotación</h3>
 {% endblock %}
 
 <!-- Botones superiores -->
@@ -19,10 +19,10 @@
     <div class="container">
         <div class="col-md-5">
             <form id='formulario' method='post' action=''>{% csrf_token %}
-                <p>Estas seguro que deseas eliminar el Alumno "{{ object }}" ?</p>
+                <p>Estas seguro que deseas eliminar la Anotación "{{ object }}" ?</p>
                 <div class="row">
                     <div class="col-md-4">
-                        <button class="btn btn-danger btn-block" type="submit">Eliminar Alumno</button>
+                        <button class="btn btn-danger btn-block" type="submit">Eliminar Anotación</button>
                     </div>
                 </div>
 	        </form>
@@ -33,6 +33,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a type="button" href="{% url 'listar_alumno' %}">Cancelar</a></li>
+        <li><a type="button" href="{% url 'listar_anotacion' %}">Cancelar</a></li>
     </ul>
 {% endblock %}

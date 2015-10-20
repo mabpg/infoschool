@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 <!-- Barra de Título -->
-{% block title %}INFOSCHOOL! - Gestión de Alumnos{% endblock %}
+{% block title %}INFOSCHOOL! - Gestión de Anotación{% endblock %}
 
 <!-- Encabezado-->
 {% block header %}
-<h3 class="page-header">Editar Alumno</h3>
+<h3 class="page-header">Editar Anotación</h3>
 {% endblock %}
 
 <!-- Botones superiores -->
@@ -16,18 +16,29 @@
 {% block content %}
 <div class="container">
         <div class="col-md-5">
-            <form id='formulario' method='post' action=''>{% csrf_token %}
 
-            Alumno:
-            <select name="usuario">
-                {% for alumno in alumnos %}
-                     <option value="{{alumno.id_alumno}}"> {{alumno.usuario.nombre}} </option>
-                {% endfor %}
-            </select>
+            <form id='formulario' method='post' action=''>{% csrf_token %}
 
                 {{formulario.as_p}}
 
-            <input type="submit" value="Guardar" />
+               <strong>Curso:</strong>
+                <select name="curso">
+                    {% for cur in cursos %}
+                        <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <strong>Materia:</strong>
+                <select name="materia">
+                    {% for mat in materias %}
+                        <option value="{{mat.id_materia}}"> {{mat.nombre}} </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+
+                <!-- boton Submit: Envia el formulario -->
+
+             <input type="submit" value="Guardar" />
             </form>
         </div>
 </div>
@@ -36,6 +47,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a type="button" href="{% url 'listar_alumno' %}">Cancelar</a></li>
+        <li><a type="button" href="{% url 'listar_anotacion' %}">Cancelar</a></li>
     </ul>
 {% endblock %}

@@ -24,6 +24,8 @@
                          <th>Curso</th>
                         <th>Materia</th>
                         <th>Fecha</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
 
                     </tr>
                 </theader>
@@ -36,9 +38,8 @@
                             <td>{{ anotacion.materia }}</td>
                             <td>{{ anotacion.fecha }}</td>
 
-
-                                <td><a href="{% url 'editar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
-                                <td><a href="{% url 'borrar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
+                            <td><a href="{% url 'editar_anotacion' anotacion.id_anotacion %}" class="btn btn-primary btn-sm" >editar</a></td>
+                            <td><a href="{% url 'borrar_anotacion' anotacion.id_anotacion %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
 
                         </tr>
                     {% endfor %}
@@ -52,6 +53,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a href="{% url 'nuevo_usuario' %}">Agregar Usuario</a></li>
+        <li><a href="{% url 'nueva_anotacion' %}">Agregar Anotacion</a></li>
     </ul>
 {% endblock %}

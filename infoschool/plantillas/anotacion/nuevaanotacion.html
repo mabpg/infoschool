@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 <!-- Barra de Título -->
-{% block title %}INFOSCHOOL! - Gestión de Alumnos{% endblock %}
+{% block title %}INFOSCHOOL! - Gestión de Anotación{% endblock %}
 
 <!-- Encabezado-->
 {% block header %}
-<h3 class="page-header">Registrar Alumno</h3>
+<h3 class="page-header">Registrar Anotación</h3>
 {% endblock %}
 
 <!-- Botones superiores -->
@@ -18,12 +18,19 @@
     <div class="container">
         <div class="col-md-5">
 
-            <form action="{% url 'nuevo_alumno' %}" method="POST" >{% csrf_token %}
+            <form action="{% url 'nueva_anotacion' %}" method="POST" >{% csrf_token %}
 
-               <strong>Alumno:</strong>
-                <select name="usuario">
-                    {% for usu in usuarios %}
-                        <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
+               <strong>Curso:</strong>
+                <select name="curso">
+                    {% for cur in cursos %}
+                        <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
+                    {% endfor %}
+                </select>
+
+                <strong>Materia:</strong>
+                <select name="materia">
+                    {% for mat in materias %}
+                        <option value="{{mat.id_materia}}"> {{mat.nombre}} </option>
                     {% endfor %}
                 </select>
                 {{formulario.as_p}}
@@ -39,6 +46,6 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a type="button" href="{% url 'listar_alumno' %}">Cancelar</a></li>
+        <li><a type="button" href="{% url 'listar_anotacion' %}">Cancelar</a></li>
     </ul>
 {% endblock %}

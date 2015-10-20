@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^alumno/', include('alumno.urls')),
     url(r'^materia/', include('materia.urls')),
     url(r'^curso/', include('curso.urls')),
+    url(r'^anotacion/', include('anotacion.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )

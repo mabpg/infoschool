@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'alumno',
     'materia',
     'curso',
+    'anotacion',
 
 )
 
