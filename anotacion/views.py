@@ -3,8 +3,8 @@
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
-from anotacion.forms import CrearAnotacionForm, EditarAnotacionForm
-from materia.models import Materia
+from anotacion.forms import CrearAnotacionForm, EditarAnotacionForm, AsignarMateriaForm
+from materia.models import Materia, Materia_curso
 from anotacion.models import Anotacion
 from alumno.models import Alumno
 
@@ -51,18 +51,6 @@ def nueva_anotacion(request):
     alumnos = Alumno.objects.all()      #Traemos todos los alumnos
     data['alumnos'] = list(alumnos)
 
-    materias = Materia.objects.all()
-
-    materias_finales = list(materias)
-
-    """ MATERIAS SOLO DEL CURSO ELEGIDO
-    for i in alumnos:
-        usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)"""
-
-
-
-    data['materias'] = list(materias_finales)
-
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     """for i in roles_sistema_usuarios:
         permisos_asociados = i.roles.permiso_sistema
@@ -75,17 +63,17 @@ def nueva_anotacion(request):
         if formulario.is_valid():
             id_alumno = request.POST['alumno']
             alumno = Alumno.objects.get(id_alumno=id_alumno)
-            #id_materia = request.POST['materia']
-            #materia = Materia.objects.get(id_materia=id_materia)
             form = formulario.save()
             form.alumno=alumno
-            #form.materia=materia
             form.save()
-            return redirect('listar_anotacion')
+            id_anotacion=form.id_anotacion
+            #return redirect('listar_anotacion')
+            return redirect('completar_agregar_anotacion', id_anotacion)
     else:
         formulario = CrearAnotacionForm()
 
     data['formulario']=formulario
+    data['alumnos'] = list(alumnos)
     return render_to_response('anotacion/nuevaanotacion.html', data, context_instance=RequestContext(request))
 
 @login_required
@@ -98,6 +86,25 @@ def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_
     """
     anotacion = Anotacion.objects.get(id_anotacion=pk)
     curso=anotacion.alumno.curso
+    materia_del_curso=Materia_curso.objects.filter(curso=curso)
+
+    materias=[]
+    for i in materia_del_curso:
+        materias.append(i.materia)
+
+    data={}
+    data['materias']=materias
+    data['anotacion']=pk
+
+    form = AsignarMateriaForm(request.POST or None, instance=anotacion)
+    if form.is_valid():
+        id_materia = request.POST['materia']
+        form.materia = id_materia
+        form.save()
+        return redirect('listar_anotacion')
+
+    data['formulario'] = form
+    return render(request, template_name, data)
 
 
 @login_required

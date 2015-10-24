@@ -33,3 +33,12 @@ class EditarAnotacionForm(forms.ModelForm):
         model = Anotacion
         fields = (
         'nombre', 'descripcion', )
+
+class AsignarMateriaForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AsignarMateriaForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Anotacion
+        fields = (
+        'materia',)
