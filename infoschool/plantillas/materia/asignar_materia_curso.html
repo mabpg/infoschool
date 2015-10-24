@@ -15,6 +15,7 @@
 <!-- Contenido -->
 {% block content %}
 
+    {% ifequal hay_elementos True %}
         <!-- Formulario -->
         <form action="{% url 'asignar_materia_curso' materia  %}" method="POST" >{% csrf_token %}
             <br>
@@ -31,6 +32,9 @@
             <!-- boton Submit: Envia el formulario -->
             <input type="submit" value="Guardar" />
         </form>
+    {% else %}
+        Esta materia ya se ha asignado a todos los cursos existentes
+    {% endifequal %}
 
 {% endblock %}
 

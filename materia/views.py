@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from materia.forms import CrearMateriaForm, EditarMateriaForm, AsignarMateriaCursoForm
 from usuario.models import Usuario
-from materia.models import Materia
+from materia.models import Materia, Materia_curso
 from curso.models import Curso
 
 @login_required
@@ -150,13 +150,27 @@ def asignar_materia_curso(request, pk, template_name='materia/asignar_materia_cu
         @return asigna roles a un usuario
         + Se asignan roles de sistema a un usuario, Un mismo usuario no puede asignarse roles a sí mismo
     """
-    materia = get_object_or_404(Materia, id_materia=pk)
     data={}
-    data['materia']=pk
+    materia = get_object_or_404(Materia, id_materia=pk)
+    cursos_ya_asignados = Materia_curso.objects.filter(materia=materia)
+    print(cursos_ya_asignados)
+    todos_cursos = Curso.objects.all()
+
+
+    for i in cursos_ya_asignados:
+        todos_cursos = todos_cursos.exclude(id_curso=i.curso.id_curso)
+
+    data['hay_elementos']=False
+
+
+    if(todos_cursos.__len__()>0):
+        data['hay_elementos']=True
+
+
+    data['cursos'] = todos_cursos
+    data['materia'] = pk
     formulario = AsignarMateriaCursoForm(request.POST or None)
 
-    todos_cursos = Curso.objects.all()
-    data['cursos'] = todos_cursos
     if formulario.is_valid():
         form = formulario.save()
         form.materia = materia

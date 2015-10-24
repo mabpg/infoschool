@@ -49,18 +49,26 @@ def nuevo_alumno(request):
     """
     usuario_actual = request.user
     usuarios = Usuario.objects.all().exclude(clase='Profesor')      #Traemos todos los usuarios que son alumnos
+    print('usuarios')
+    print(usuarios)
 
     alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
+    print('alumnos')
+    print(alumnos)
 
     usuarios_finales = list(usuarios)
 
     for i in alumnos:
         usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)
 
+    print('usuarios_finales')
+    print(usuarios_finales)
+
     data = {}
     if usuarios_finales.__len__()<0:
         data['mensaje'] = 'No hay usuarios sin ser alumnos'
     data['usuarios'] = list(usuarios_finales)
+
 
     cursos = Curso.objects.all()      #Traemos todos los cursos
     data['cursos'] = list(cursos)
