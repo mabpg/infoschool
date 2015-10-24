@@ -10,7 +10,7 @@ from curso.models import Curso
 @login_required
 def listar_cursos(request, template_name='curso/listar_curso.html'):
     """
-    Lista de alumnos
+    Lista de cursos
     @param request: http request
     @param template_name nombre del template a utilizar
     @return Despliega los alumnos existentes en el sistema con sus atributos
@@ -71,9 +71,9 @@ def nuevo_curso(request):
 def editar_curso(request, pk, template_name='curso/editar_curso.html'):
     """
         @param request: http request
-        @param pk: id del alumno a modificar
+        @param pk: id del curso a modificar
         @param template_name nombre del template a utilizar
-        @result Modifica los campos de un alumno
+        @result Modifica los campos de un curso
     """
     usuario_actual = request.user
     """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
@@ -99,11 +99,11 @@ def editar_curso(request, pk, template_name='curso/editar_curso.html'):
 @login_required
 def eliminar_curso(request, pk, template_name='curso/eliminar_curso.html'):
     """
-    eliminar un alumno
+    eliminar un curso
     @param request: http request
-    @param pk: id del alumno a eliminar
-    @result Elimina un alumno
-    +Se permite la eliminación de un alumno solo si no está asociado a ningún proyecto (si no posee ningun rol)
+    @param pk: id del curso a eliminar
+    @result Elimina un curso
+    +Se permite la eliminación de un curso solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
     usuario_actual = request.user
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion

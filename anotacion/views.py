@@ -11,7 +11,7 @@ from alumno.models import Alumno
 @login_required
 def listar_anotaciones(request, template_name='anotacion/listar_anotacion.html'):
     """
-    Lista de alumnos
+    Lista de anotaciones
     @param request: http request
     @param template_name nombre del template a utilizar
     @return Despliega los alumnos existentes en el sistema con sus atributos
@@ -39,7 +39,7 @@ def listar_anotaciones(request, template_name='anotacion/listar_anotacion.html')
 @login_required
 def nueva_anotacion(request):
     """
-    Vista del formulario de creacion de alumnos. Ver forms.py
+    Vista del formulario de creacion de anotaciones. Ver forms.py
     @param request: http request
     Permite crear usuarios a partir de un formulario
     @return Crea un usuario nuevo
@@ -94,7 +94,7 @@ def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_
             @param request: http request
             @param pk: id de la anotacion
             @param template_name nombre del template a utilizar
-            @result Modifica los campos de un alumno
+            @result se agrega materia y responsable de la anotacion
     """
     anotacion = Anotacion.objects.get(id_anotacion=pk)
     curso=anotacion.alumno.curso
@@ -104,9 +104,9 @@ def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_
 def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html'):
     """
         @param request: http request
-        @param pk: id del alumno a modificar
+        @param pk: id de la anotacion modificar
         @param template_name nombre del template a utilizar
-        @result Modifica los campos de un alumno
+        @result Modifica los campos de una anotacion
     """
     data={}
     usuario_actual = request.user
@@ -139,11 +139,11 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
 @login_required
 def eliminar_anotacion(request, pk, template_name='anotacion/eliminar_anotacion.html'):
     """
-    eliminar un alumno
+    eliminar una anotacion
     @param request: http request
-    @param pk: id del alumno a eliminar
-    @result Elimina un alumno
-    +Se permite la eliminación de un alumno solo si no está asociado a ningún proyecto (si no posee ningun rol)
+    @param pk: id de la anotacion a eliminar
+    @result Elimina una anotacion
+    +Se permite la eliminación de una anotacion solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
     usuario_actual = request.user
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion

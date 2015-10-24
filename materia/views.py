@@ -11,7 +11,7 @@ from curso.models import Curso
 @login_required
 def listar_materias(request, template_name='materia/listar_materia.html'):
     """
-    Lista de alumnos
+    Lista de materias
     @param request: http request
     @param template_name nombre del template a utilizar
     @return Despliega los alumnos existentes en el sistema con sus atributos
@@ -32,14 +32,14 @@ def listar_materias(request, template_name='materia/listar_materia.html'):
         data['modificar_usuarios']=modificacion
         data['eliminar_usuarios']=eliminacion
     """
-    materias = Materia.objects.all().order_by('id_materia') #traemos todos los datos que hay en la tabla Alumno
+    materias = Materia.objects.all().order_by('id_materia') #traemos todos los datos que hay en la tabla Materia
     data['object_list'] = materias
     return render(request, template_name, data)
 
 @login_required
 def nueva_materia(request):
     """
-    Vista del formulario de creacion de alumnos. Ver forms.py
+    Vista del formulario de creacion de materias. Ver forms.py
     @param request: http request
     Permite crear usuarios a partir de un formulario
     @return Crea un usuario nuevo
@@ -81,9 +81,9 @@ def nueva_materia(request):
 def editar_materia(request, pk, template_name='materia/editar_materia.html'):
     """
         @param request: http request
-        @param pk: id del alumno a modificar
+        @param pk: id de la materia a modificar
         @param template_name nombre del template a utilizar
-        @result Modifica los campos de un alumno
+        @result Modifica los campos de una materia
     """
     usuario_actual = request.user
     """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
@@ -111,11 +111,11 @@ def editar_materia(request, pk, template_name='materia/editar_materia.html'):
 @login_required
 def eliminar_materia(request, pk, template_name='materia/eliminar_materia.html'):
     """
-    eliminar un alumno
+    eliminar una materia
     @param request: http request
-    @param pk: id del alumno a eliminar
-    @result Elimina un alumno
-    +Se permite la eliminación de un alumno solo si no está asociado a ningún proyecto (si no posee ningun rol)
+    @param pk: id de la materia eliminar
+    @result Elimina una materia
+    +Se permite la eliminación de una materia solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
     usuario_actual = request.user
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
