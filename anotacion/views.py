@@ -93,8 +93,8 @@ def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_
         materias.append(i.materia)
 
     data={}
-    data['materias']=materias
-    data['anotacion']=pk
+    data['materias'] = materias
+    data['anotacion'] = pk
 
     form = AsignarMateriaForm(request.POST or None, instance=anotacion)
     if form.is_valid():
@@ -115,7 +115,8 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
         @param template_name nombre del template a utilizar
         @result Modifica los campos de una anotacion
     """
-    data={}
+
+
     usuario_actual = request.user
     """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     for i in roles_sistema_usuarios:
@@ -124,19 +125,20 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
 
     modificar_usuarios = creacion
     if modificar_usuarios==True:"""
-
-    alumnos = Alumno.objects.all()      #Traemos todos los alumnos
-    data['alumnos'] = list(alumnos)
-
-    materias = Materia.objects.all()
-
-    materias_finales = list(materias)
-
-    data['materias'] = list(materias_finales)
-
     anotacion = get_object_or_404(Anotacion, pk=pk)
+    curso=anotacion.alumno.curso
+    materia_del_curso=Materia_curso.objects.filter(curso=curso)
+
+    materias=[]
+    for i in materia_del_curso:
+        materias.append(i.materia)
+
+    data={}
+    data['materias'] = materias
+
     form = EditarAnotacionForm(request.POST or None, instance=anotacion)
     if form.is_valid():
+
         form.save()
         return redirect('listar_anotacion')
 

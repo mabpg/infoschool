@@ -32,7 +32,19 @@ class EditarAnotacionForm(forms.ModelForm):
     class Meta:
         model = Anotacion
         fields = (
-        'nombre', 'descripcion', )
+        'nombre', 'descripcion', 'responsable')
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de la anotacion', 'id': 'inputUserName'}),
+            'descripcion': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Descripcion de la anotacion', 'id': 'inputUserName'}),
+            'responsable': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Responsable de la anotacion', 'id': 'inputUserName'}),
+
+        }
+        labels = {
+            'nombre': 'Nombre',
+            'descripcion': 'Descripcion',
+            'responsable': 'Responsable'
+        }
 
 class AsignarMateriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -41,4 +53,4 @@ class AsignarMateriaForm(forms.ModelForm):
     class Meta:
         model = Anotacion
         fields = (
-        'materia',)
+        'materia', 'responsable',)

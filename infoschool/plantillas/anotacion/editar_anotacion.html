@@ -21,24 +21,11 @@
 
                 {{formulario.as_p}}
 
-                <strong>Alumno:</strong>
-                <select name="alumno">
-                    {% for al in alumnos %}
-                        <option value="{{al.id_alumno}}"> {{al.usuario.nombre}} </option>
-                    {% endfor %}
-                </select>
-                <br><br>
-                <strong>Materia:</strong>
-                <select name="materia">
-                    {% for mat in materias %}
-                        <option value="{{mat.id_materia}}"> {{mat.nombre}} </option>
-                    {% endfor %}
-                </select>
                 <br><br>
 
                 <!-- boton Submit: Envia el formulario -->
 
-             <input type="submit" value="Guardar" />
+             <input type="submit" class="btn btn-success" value="Guardar" />
             </form>
         </div>
 </div>

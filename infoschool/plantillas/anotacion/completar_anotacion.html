@@ -19,10 +19,11 @@
         <div class="col-md-5">
 
             <form action="{% url 'completar_agregar_anotacion' anotacion %}" method="POST" >{% csrf_token %}
-
-
+                <strong>Responsable:</strong>
+                <input class="form-control" type="text" placeholder="Nombre del responsable" name="responsable"/>
+                <br><br>
                 <strong>Materia:</strong>
-                <select name="materia">
+                <select name="materia" class="form-control">
                     {% for mat in materias %}
                         <option value="{{mat.id_materia}}"> {{mat.nombre}} </option>
                     {% endfor %}

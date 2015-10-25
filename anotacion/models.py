@@ -12,6 +12,7 @@ class Anotacion (models.Model):
     descripcion = models.CharField(max_length=45, null=True, blank=True)
     materia = models.ForeignKey(Materia, null=True, blank=True)
     fecha = models.DateTimeField(default=datetime.datetime.now())
+    responsable = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:
         db_table = 'anotacion'
