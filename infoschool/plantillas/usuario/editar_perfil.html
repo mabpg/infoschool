@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL! - Gestión de Usuarios{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+<h3 class="page-header">Editar Usuario</h3>
+{% endblock %}
+
+<!-- Botones superiores -->
+{% block botones %}
+
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<div class="container">
+        <div class="col-md-5">
+            <form id='formulario' method='post' action=''>{% csrf_token %}
+            {{editar_usuario.as_p}}
+                <div class="row">
+                    <div class="col-md-4">
+                            <button class="btn btn-primary btn-block" type="submit">Editar Perfil</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>
+{% endblock %}
+
+<!-- SideBar -->
+{% block sidebar %}
+    <ul class="nav nav-sidebar">
+        <li><a type="button" href="{% url 'perfil_usuario' %}">Cancelar</a></li>
+    </ul>
+{% endblock %}

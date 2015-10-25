@@ -69,4 +69,29 @@ class EditarUsuarioForm(forms.ModelForm):
         }
 
 
+class EditarPerfilForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EditarPerfilForm, self).__init__(*args, **kwargs)
 
+    class Meta:
+        model = Usuario
+        fields = (
+        'nombre_usuario', 'nombre', 'apellido', 'correo_electronico', 'telefono', 'direccion')
+        widgets = {
+            'nombre_usuario': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Nombres', 'id': 'inputUserName'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Apellidos', 'id': 'inputUserName'}),
+            'correo_electronico': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Correo Electronico', 'id': 'inputUserName'}),
+
+            'telefono': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Telefono', 'id': 'inputUserName'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Direccion', 'id': 'inputUserName'}),
+        }
+        labels = {
+            'nombre_usuario': 'Nombre de Usuario',
+            'nombre': 'Nombre',
+            'apellido': 'Apellido',
+            'correo_electronico': 'Correo Electronico',
+
+            'telefono': 'Telefono',
+            'Direccion': 'Direccion',
+        }

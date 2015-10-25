@@ -3,7 +3,7 @@
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
-from usuario.forms import CrearUsuarioForm, EditarUsuarioForm
+from usuario.forms import CrearUsuarioForm, EditarUsuarioForm, EditarPerfilForm
 from usuario.models import Usuario
 
 
@@ -34,6 +34,44 @@ def listar_usuarios(request, template_name='usuario/listar_usuario.html'):
     usuarios = Usuario.objects.all().order_by('id_usuario') #traemos todos los datos que hay en la tabla Usuarios
     data['object_list'] = usuarios
     return render(request, template_name, data)
+
+
+@login_required
+def perfil_usuario(request, template_name='usuario/perfil_usuario.html'):
+    """
+    Lista de usuarios
+    @param request: http request
+    @param template_name nombre del template a utilizar
+    @return Despliega los usuarios existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+    usuario_actual = request.user
+    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
+    data = {}
+    usuario = Usuario.objects.get(id_usuario=usuario_actual.id_usuario) #traemos todos los datos que hay en la tabla Usuarios
+
+    data['usuario'] = usuario
+    return render(request, template_name, data)
+
+@login_required
+def editar_perfil(request, pk, template_name='usuario/editar_perfil.html'):
+    """
+        @param request: http request
+        @param pk: id del usuario a modificar
+        @param template_name nombre del template a utilizar
+        @result Modifica los campos de un usuario
+    """
+    usuario_actual = request.user
+
+    usuario = get_object_or_404(Usuario, pk=pk)
+    form = EditarPerfilForm(request.POST or None, instance=usuario)
+    if form.is_valid():
+        form.save()
+        return redirect('perfil_usuario')
+    return render(request, template_name, {'editar_usuario': form})
+
+
 
 @login_required
 def nuevo_usuario(request):
