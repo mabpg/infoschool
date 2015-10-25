@@ -113,70 +113,17 @@ def home_sistema(request):
     + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
      permisos se muestran los botones a los que tiene acceso dicho usuario
     """
-    usuario_actual = request.user
-    """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    usuarios = {}
-    for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-        creacion = permisos_asociados.crear_usuario
-        modificacion = permisos_asociados.modificar_usuario
-        eliminacion = permisos_asociados.eliminar_usuario
-        #usuarios['crear_usuario']= creacion
-        #usuarios['modificar_usuario']= modificacion
-        #usuarios['eliminar_usuario']= eliminacion
-        if creacion==True or modificacion== True or eliminacion==True:
-            usuarios['usuarios'] = True
-        else:
-            usuarios['usuarios'] = False
-
-        creacion = permisos_asociados.crear_rol
-        modificacion = permisos_asociados.modificar_rol
-        eliminacion = permisos_asociados.eliminar_rol
-        if creacion==True or modificacion== True or eliminacion==True:
-            usuarios['roles'] = True
-        else:
-            usuarios['roles'] = False
-
-        creacion = permisos_asociados.crear_flujo
-        modificacion = permisos_asociados.modificar_flujo
-        eliminacion = permisos_asociados.eliminar_flujo
-        if creacion==True or modificacion== True or eliminacion==True:
-            usuarios['flujos'] = True
-        else:
-            usuarios['flujos'] = False
-
-        creacion = permisos_asociados.crear_proyecto
-        modificacion = permisos_asociados.modificar_proyecto
-        eliminacion = permisos_asociados.eliminar_proyecto
-        cancelacion = permisos_asociados.cancelar_proyecto
-        if creacion==True or modificacion== True or eliminacion==True or cancelacion==True:
-            usuarios['proyectos'] = True
-        else:
-            usuarios['proyectos'] = False"""
-
-    """
-    #PROYECTO
-    roles_proyecto_usuario = list(Usuario_Rol_Proyecto.objects.filter(usuario=usuario_actual)) #traemos todos los roles de proyecto que se han asignado al usuario en cuestion
-
-    #lista de proyectos del usuario
-    lista_proyectos=[]
-    creacion=None
-    modificacion=None
-
-    for i in roles_proyecto_usuario:
-        lista_proyectos.append(i.proyecto)
-
-    for i in roles_proyecto_usuario:
-        permisos_asociados = i.roles.permiso_proyecto
-        creacion = permisos_asociados.crear_flujo or permisos_asociados.crear_sprint or permisos_asociados.crear_user_story or permisos_asociados.crear_release or permisos_asociados.crear_rol
-        modificacion = permisos_asociados.modificar_flujo or permisos_asociados.modificar_sprint or permisos_asociados.modificar_user_story or permisos_asociados.modificar_rol
-    """
     data={}
-    #data['permiso_ingresar']=creacion or modificacion
-    #data['mostrar']=usuarios
+    usuario_actual = request.user
+    data['admin'] = False
+    data['alum'] = False
+    data['profe'] = False
+    if(usuario_actual.is_admin==True):
+        data['admin'] = True
 
-    #lista_proyectos=Materia.objects.all()
-    #data['lista_proyectos']=lista_proyectos
+    if(usuario_actual.clase=='Profesor'):
+        data['profe']=True
+
     template_name = 'home.html'
     return render(request, template_name, data)
 

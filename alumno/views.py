@@ -7,6 +7,7 @@ from alumno.forms import CrearAlumnoForm, EditarAlumnoForm
 from alumno.models import Alumno
 from usuario.models import Usuario
 from curso.models import Curso
+from materia.models import Materia, Materia_curso
 
 
 @login_required
@@ -20,20 +21,66 @@ def listar_alumnos(request, template_name='alumno/listar_alumno.html'):
      permisos se muestran los botones a los que tiene acceso dicho usuario
     """
     usuario_actual = request.user
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     data = {}
-    """if roles_sistema_usuarios.__len__()>0:
-        for i in roles_sistema_usuarios:
-            permisos_asociados = i.roles.permiso_sistema
-            creacion = permisos_asociados.crear_usuario
-            modificacion = permisos_asociados.modificar_usuario
-            eliminacion = permisos_asociados.eliminar_usuario
+    data['admin'] = False
+    data['alum'] = False
+    data['profe'] = False
+    if(usuario_actual.is_admin==True):
+        data['admin']=True
 
-        data['crear_usuarios']=creacion
-        data['modificar_usuarios']=modificacion
-        data['eliminar_usuarios']=eliminacion
-    """
+    if(usuario_actual.clase=='Alumno'):
+        data['alum']=True
+
+    if(usuario_actual.clase=='Profesor'):
+        data['profe']=True
+
     alumnos = Alumno.objects.all().order_by('id_alumno') #traemos todos los datos que hay en la tabla Alumno
+    data['object_list'] = alumnos
+    return render(request, template_name, data)
+
+
+@login_required
+def listar_alumnos_de_profe(request, template_name='alumno/listar_alumnos_del_profe.html'):
+    """
+    Lista de alumnos
+    @param request: http request
+    @param template_name nombre del template a utilizar
+    @return Despliega los alumnos existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+    usuario_actual = request.user
+    data = {}
+    data['admin'] = False
+    data['alum'] = False
+    data['profe'] = False
+    if(usuario_actual.is_admin==True):
+        data['admin']=True
+
+    if(usuario_actual.clase=='Alumno'):
+        data['alum']=True
+
+    if(usuario_actual.clase=='Profesor'):
+        data['profe']=True
+
+    materias_no_del_profe = Materia.objects.exclude(profesor=usuario_actual)
+
+    todas_materias_curso = Materia_curso.objects.all()
+
+    for i in materias_no_del_profe:
+        todas_materias_curso = todas_materias_curso.exclude(materia=i)
+
+    todos_los_cursos = Curso.objects.all()
+    for i in todas_materias_curso:
+         todos_los_cursos = todos_los_cursos.exclude(id_curso=i.curso.id_curso)     #todos los no cursos
+
+
+
+    alumnos = Alumno.objects.all() #traemos todos los datos que hay en la tabla Alumno
+
+    for i in todos_los_cursos:
+        alumnos=alumnos.exclude(curso=i)
+
     data['object_list'] = alumnos
     return render(request, template_name, data)
 

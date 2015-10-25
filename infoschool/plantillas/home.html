@@ -19,15 +19,25 @@
 {% block sidebar %}
     <ul class="nav nav-sidebar">
 
-        <li><a href="{% url 'usuario.views.listar_usuarios' %}">Usuarios</a></li>
+        {% if admin %}
 
-        <li><a href="{% url 'listar_alumno' %}">Alumnos</a></li>
+            <li><a href="{% url 'usuario.views.listar_usuarios' %}">Usuarios</a></li>
 
-        <li><a href="{% url 'listar_materia' %}">Materias</a></li>
+        {% endif %}
 
-        <li><a href="{% url 'listar_curso' %}">Cursos</a></li>
+        {% if profe %}
+            <li><a href="{% url 'listar_alumnos_de_profe' %}">Mis Alumnos</a></li>
+        {% endif %}
 
-        <li><a href="{% url 'listar_anotacion' %}">Anotación</a></li>
+        {% if admin %}
+            <li><a href="{% url 'listar_alumno' %}">Alumnos</a></li>
+        {% endif %}
+
+            <li><a href="{% url 'listar_materia' %}">Materias</a></li>
+
+            <li><a href="{% url 'listar_curso' %}">Cursos</a></li>
+
+            <li><a href="{% url 'listar_anotacion' %}">Anotación</a></li>
 
 
     </ul>
