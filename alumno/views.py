@@ -118,13 +118,6 @@ def nuevo_alumno(request):
     cursos = Curso.objects.all()      #Traemos todos los cursos
     data['cursos'] = list(cursos)
 
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    """for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-    creacion = permisos_asociados.crear_usuario
-    crear_usuarios = creacion
-
-    if crear_usuarios==True:"""
     if request.method=='POST':
         formulario = CrearAlumnoForm(request.POST)
         if formulario.is_valid():
@@ -143,7 +136,6 @@ def nuevo_alumno(request):
 
     data['formulario']=formulario
     return render_to_response('alumno/nuevoalumno.html', data, context_instance=RequestContext(request))
-    #return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario, 'data':data}, context_instance=RequestContext(request))
 
 @login_required
 def editar_alumno(request, pk, template_name='alumno/editar_alumno.html'):
@@ -154,14 +146,6 @@ def editar_alumno(request, pk, template_name='alumno/editar_alumno.html'):
         @result Modifica los campos de un alumno
     """
     usuario_actual = request.user
-    """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-        creacion = permisos_asociados.modificar_usuario
-
-    modificar_usuarios = creacion
-    if modificar_usuarios==True:"""
-
     alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
 
     data={}
@@ -189,24 +173,12 @@ def eliminar_alumno(request, pk, template_name='alumno/eliminar_alumno.html'):
     +Se permite la eliminación de un alumno solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
     usuario_actual = request.user
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    """for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-    creacion = permisos_asociados.eliminar_usuario
-    eliminar_usuarios = creacion
-    if eliminar_usuarios==True:"""
+
     server = get_object_or_404(Alumno, pk=pk)
-    """lista_roles_sis = Usuario_Rol_Sistema.objects.filter(usuario = server) #vemos si existen roles de sistema asignado al usuario
-    lista_roles_proy = Usuario_Rol_Proyecto.objects.filter(usuario = server) #vemos si existen roles de proyecto asignado al usuario
-    count = lista_roles_sis.__len__()
-    count = count + lista_roles_proy.__len__()
-    if count == 0: #si count es igual a cero, entonces el usuario no posee roles asignados"""
+
     if request.method == 'POST':
         server.delete()
         return redirect('listar_alumno')
-    """else:
-        mensaje = "El usuario tiene asignado roles y no puede ser eliminado"
-        return render_to_response('usuario/usuario_no_eliminado.html', {'object':mensaje}, context_instance=RequestContext(request))"""
 
     return render(request, template_name, {'object': server})
 

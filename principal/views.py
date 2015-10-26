@@ -124,7 +124,7 @@ def home_sistema(request):
     if(usuario_actual.clase=='Profesor'):
         data['profe']=True
 
-    if(usuario_actual.clase=='Alumno'):
+    if(usuario_actual.clase=='Alumno' and usuario_actual.is_admin==False):
         data['alum']=True
 
     template_name = 'home.html'
