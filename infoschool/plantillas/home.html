@@ -31,9 +31,16 @@
 
         {% if admin %}
             <li><a href="{% url 'listar_alumno' %}">Alumnos</a></li>
-        {% endif %}
 
             <li><a href="{% url 'listar_materia' %}">Materias</a></li>
+        {% endif %}
+        {% if profe %}
+            <li><a href="{% url 'listar_materias_profesor' %}">Mis Materias</a></li>
+        {% endif %}
+
+        {% if alum %}
+            <li><a href="{% url 'listar_materias_alumno' %}">Mis Materias</a></li>
+        {% endif %}
 
             <li><a href="{% url 'listar_curso' %}">Cursos</a></li>
 

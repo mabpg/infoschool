@@ -7,6 +7,7 @@ from materia.forms import CrearMateriaForm, EditarMateriaForm, AsignarMateriaCur
 from usuario.models import Usuario
 from materia.models import Materia, Materia_curso
 from curso.models import Curso
+from alumno.models import Alumno
 
 @login_required
 def listar_materias(request, template_name='materia/listar_materia.html'):
@@ -21,19 +22,53 @@ def listar_materias(request, template_name='materia/listar_materia.html'):
     usuario_actual = request.user
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     data = {}
-    """if roles_sistema_usuarios.__len__()>0:
-        for i in roles_sistema_usuarios:
-            permisos_asociados = i.roles.permiso_sistema
-            creacion = permisos_asociados.crear_usuario
-            modificacion = permisos_asociados.modificar_usuario
-            eliminacion = permisos_asociados.eliminar_usuario
 
-        data['crear_usuarios']=creacion
-        data['modificar_usuarios']=modificacion
-        data['eliminar_usuarios']=eliminacion
-    """
     materias = Materia.objects.all().order_by('id_materia') #traemos todos los datos que hay en la tabla Materia
     data['object_list'] = materias
+    return render(request, template_name, data)
+
+@login_required
+def listar_materias_profesor(request, template_name='materia/listar_materias_profesor.html'):
+    """
+    Lista de materias
+    @param request: http request
+    @param template_name nombre del template a utilizar
+    @return Despliega los alumnos existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+    usuario_actual = request.user
+
+    data = {}
+    materias_del_profe = Materia.objects.filter(profesor=usuario_actual)
+
+    data['object_list'] = materias_del_profe
+    return render(request, template_name, data)
+
+@login_required
+def listar_materias_alumno(request, template_name='materia/listar_materias_alumno.html'):
+    """
+    Lista de materias
+    @param request: http request
+    @param template_name nombre del template a utilizar
+    @return Despliega los alumnos existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+    usuario_actual = request.user
+
+    data = {}
+
+    alumno = Alumno.objects.get(usuario=usuario_actual)
+
+    print('alumno')
+    print(alumno)
+
+    materias_del_alumno = Materia_curso.objects.filter(curso=alumno.curso)
+
+    print(materias_del_alumno)
+
+    data['object_list'] = materias_del_alumno
     return render(request, template_name, data)
 
 @login_required
@@ -52,13 +87,7 @@ def nueva_materia(request):
     data={}
     data['profes'] = profesores
 
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    """for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-    creacion = permisos_asociados.crear_usuario
-    crear_usuarios = creacion
 
-    if crear_usuarios==True:"""
     if request.method=='POST':
         formulario = CrearMateriaForm(request.POST)
         if formulario.is_valid():
@@ -75,7 +104,7 @@ def nueva_materia(request):
 
     data['formulario'] = formulario
     return render_to_response('materia/nuevamateria.html', data, context_instance=RequestContext(request))
-    #return render_to_response('alumno/nuevoalumno.html', {'formulario':formulario, 'data':data}, context_instance=RequestContext(request))
+
 
 @login_required
 def editar_materia(request, pk, template_name='materia/editar_materia.html'):

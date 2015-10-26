@@ -74,8 +74,6 @@ def listar_alumnos_de_profe(request, template_name='alumno/listar_alumnos_del_pr
     for i in todas_materias_curso:
          todos_los_cursos = todos_los_cursos.exclude(id_curso=i.curso.id_curso)     #todos los no cursos
 
-
-
     alumnos = Alumno.objects.all() #traemos todos los datos que hay en la tabla Alumno
 
     for i in todos_los_cursos:

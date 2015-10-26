@@ -124,6 +124,9 @@ def home_sistema(request):
     if(usuario_actual.clase=='Profesor'):
         data['profe']=True
 
+    if(usuario_actual.clase=='Alumno'):
+        data['alum']=True
+
     template_name = 'home.html'
     return render(request, template_name, data)
 
