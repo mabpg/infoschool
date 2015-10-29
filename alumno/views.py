@@ -94,6 +94,8 @@ def nuevo_alumno(request):
     """
     usuario_actual = request.user
     usuarios = Usuario.objects.all().exclude(clase='Profesor')      #Traemos todos los usuarios que son alumnos
+    #usuarios = usuarios.exclude(is_admin=True)
+
     print('usuarios')
     print(usuarios)
 
@@ -103,7 +105,7 @@ def nuevo_alumno(request):
 
     usuarios_finales = list(usuarios)
 
-    for i in alumnos:
+    for i in alumnos:   #quitamos los usuarios que ya están en la tabla alumno
         usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)
 
     print('usuarios_finales')

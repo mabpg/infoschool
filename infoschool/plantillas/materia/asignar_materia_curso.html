@@ -14,27 +14,32 @@
 
 <!-- Contenido -->
 {% block content %}
+    <div class="container">
+        <div class="col-md-5">
 
-    {% ifequal hay_elementos True %}
-        <!-- Formulario -->
-        <form action="{% url 'asignar_materia_curso' materia  %}" method="POST" >{% csrf_token %}
-            <br>
-            <br>
-            <strong>Curso:</strong>
-            <select name="curso">
-                {% for cur in cursos %}
 
-                        <option value="{{cur.id_curso}}">{{cur.nombre}}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <br>
-            <!-- boton Submit: Envia el formulario -->
-            <input type="submit" value="Guardar" />
-        </form>
-    {% else %}
-        Esta materia ya se ha asignado a todos los cursos existentes
-    {% endifequal %}
+            {% ifequal hay_elementos True %}
+                <!-- Formulario -->
+                <form action="{% url 'asignar_materia_curso' materia  %}" method="POST" >{% csrf_token %}
+                    <br>
+                    <br>
+                    <strong>Curso:</strong>
+                    <select class='form-control' name="curso">
+                        {% for cur in cursos %}
+
+                                <option value="{{cur.id_curso}}">{{cur.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <br>
+                    <!-- boton Submit: Envia el formulario -->
+                    <input type="submit" value="Guardar" />
+                </form>
+            {% else %}
+                Esta materia ya se ha asignado a todos los cursos existentes
+            {% endifequal %}
+        </div>
+    </div>
 
 {% endblock %}
 

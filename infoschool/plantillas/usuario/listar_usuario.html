@@ -26,6 +26,7 @@
                         <th>Cédula</th>
                         <th>Teléfono</th>
                         <th>Dirección</th>
+                        <th>Clase</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
 
@@ -42,6 +43,7 @@
                             <td>{{ usuario.cedula }}</td>
                             <td>{{ usuario.telefono }}</td>
                             <td>{{ usuario.direccion }}</td>
+                            <td>{{ usuario.clase }}</td>
 
                                 <td><a href="{% url 'editar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
                                 <td><a href="{% url 'borrar_usuario' usuario.id_usuario %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>

@@ -21,14 +21,14 @@
             <form action="{% url 'nuevo_alumno' %}" method="POST" >{% csrf_token %}
 
                <strong>Alumno:</strong>
-                <select name="usuario">
+                <select class='form-control' name="usuario">
                     {% for usu in usuarios %}
                         <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
                     {% endfor %}
                 </select>
                 <br><br>
                 <strong>Curso:</strong>
-                <select name="curso">
+                <select class='form-control' name="curso">
                     {% for cur in cursos %}
                         <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
                     {% endfor %}

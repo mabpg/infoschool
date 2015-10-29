@@ -23,7 +23,7 @@
                 {{formulario.as_p}}
 
                 <strong>Profesor:</strong>
-                <select name="profesor">
+                <select class='form-control' name="profesor">
                     {% for usu in profes %}
                         <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
                     {% endfor %}
