@@ -110,7 +110,6 @@ def nuevo_alumno(request):
     if usuarios_finales.__len__() == 0:
         data['hay_mns'] = True
 
-    print(usuarios_finales.__len__())
     data['usuarios'] = list(usuarios_finales)
 
 

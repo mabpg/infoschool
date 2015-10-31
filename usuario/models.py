@@ -49,9 +49,9 @@ class Usuario(AbstractBaseUser):
     telefono = models.CharField(max_length=15, blank=True)
     direccion = models.CharField(max_length=55, blank=False)
     #roles
-    clase = models.CharField(max_length=10,
+    clase = models.CharField(max_length=15,
                               choices=CLASE,
-                              default='Alumno')
+                              default='Administrador')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

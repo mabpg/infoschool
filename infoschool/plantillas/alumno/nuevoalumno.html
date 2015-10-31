@@ -24,14 +24,14 @@
                    <strong>Alumno:</strong>
                     <select class='form-control' name="usuario">
                         {% for usu in usuarios %}
-                            <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
+                            <option value="{{usu.id_usuario}}"> {{usu.nombre}} {{ usu.apellido }}</option>
                         {% endfor %}
                     </select>
                     <br><br>
                     <strong>Curso:</strong>
                     <select class='form-control' name="curso">
                         {% for cur in cursos %}
-                            <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
+                            <option value="{{cur.id_curso}}"> {{cur.nombre}} - {{ cur.seccion }}</option>
                         {% endfor %}
                     </select>
                     <br><br>

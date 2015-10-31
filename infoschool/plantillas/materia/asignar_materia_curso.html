@@ -27,7 +27,7 @@
                     <select class='form-control' name="curso">
                         {% for cur in cursos %}
 
-                                <option value="{{cur.id_curso}}">{{cur.nombre}}</option>
+                                <option value="{{cur.id_curso}}">{{cur.nombre}} - {{ cur.seccion }}</option>
                         {% endfor %}
                     </select>
                     <br>
