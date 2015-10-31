@@ -92,28 +92,25 @@ def nuevo_alumno(request):
     +Además de crear un usuario se verifica que el usuario que trata de acceder a está funcionalidad tenga el permiso
     correspondiente
     """
-    usuario_actual = request.user
     usuarios = Usuario.objects.all().exclude(clase='Profesor')      #Traemos todos los usuarios que son alumnos
-    #usuarios = usuarios.exclude(is_admin=True)
 
-    print('usuarios')
-    print(usuarios)
+    for i in usuarios:
+        if i.is_admin:
+            usuarios = usuarios.exclude(id_usuario=i.id_usuario)
 
     alumnos = Alumno.objects.all()                                  #traemos todos los elementos de la tabla alumno
-    print('alumnos')
-    print(alumnos)
 
-    usuarios_finales = list(usuarios)
+    usuarios_finales = usuarios
 
     for i in alumnos:   #quitamos los usuarios que ya están en la tabla alumno
-        usuarios_finales = usuarios.exclude(id_usuario=i.usuario.id_usuario)
-
-    print('usuarios_finales')
-    print(usuarios_finales)
+        usuarios_finales = usuarios_finales.exclude(id_usuario=i.usuario.id_usuario)
 
     data = {}
-    if usuarios_finales.__len__()<0:
-        data['mensaje'] = 'No hay usuarios sin ser alumnos'
+    data['hay_mns'] = False
+    if usuarios_finales.__len__() == 0:
+        data['hay_mns'] = True
+
+    print(usuarios_finales.__len__())
     data['usuarios'] = list(usuarios_finales)
 
 

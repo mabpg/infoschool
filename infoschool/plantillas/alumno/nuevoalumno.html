@@ -17,29 +17,35 @@
 {% block content %}
     <div class="container">
         <div class="col-md-5">
+            {% ifequal hay_mns False%}
+                <form action="{% url 'nuevo_alumno' %}" method="POST" >{% csrf_token %}
 
-            <form action="{% url 'nuevo_alumno' %}" method="POST" >{% csrf_token %}
 
-               <strong>Alumno:</strong>
-                <select class='form-control' name="usuario">
-                    {% for usu in usuarios %}
-                        <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
-                    {% endfor %}
-                </select>
-                <br><br>
-                <strong>Curso:</strong>
-                <select class='form-control' name="curso">
-                    {% for cur in cursos %}
-                        <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
-                    {% endfor %}
-                </select>
-                <br><br>
-                {{formulario.as_p}}
+                   <strong>Alumno:</strong>
+                    <select class='form-control' name="usuario">
+                        {% for usu in usuarios %}
+                            <option value="{{usu.id_usuario}}"> {{usu.nombre}} </option>
+                        {% endfor %}
+                    </select>
+                    <br><br>
+                    <strong>Curso:</strong>
+                    <select class='form-control' name="curso">
+                        {% for cur in cursos %}
+                            <option value="{{cur.id_curso}}"> {{cur.nombre}} </option>
+                        {% endfor %}
+                    </select>
+                    <br><br>
+                    {{formulario.as_p}}
 
-                <!-- boton Submit: Envia el formulario -->
+                    <!-- boton Submit: Envia el formulario -->
 
-             <input type="submit" value="Guardar" />
-            </form>
+                 <input type="submit" value="Guardar" />
+
+                </form>
+            {% else %}
+                <strong>No hay usuarios sin ser alumnos</strong>
+            {% endifequal %}
+
         </div>
     </div>
 {% endblock %}
