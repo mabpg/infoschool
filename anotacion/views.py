@@ -21,19 +21,28 @@ def listar_anotaciones(request, template_name='anotacion/listar_anotacion.html')
     usuario_actual = request.user
     #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     data = {}
-    """if roles_sistema_usuarios.__len__()>0:
-        for i in roles_sistema_usuarios:
-            permisos_asociados = i.roles.permiso_sistema
-            creacion = permisos_asociados.crear_usuario
-            modificacion = permisos_asociados.modificar_usuario
-            eliminacion = permisos_asociados.eliminar_usuario
 
-        data['crear_usuarios']=creacion
-        data['modificar_usuarios']=modificacion
-        data['eliminar_usuarios']=eliminacion
-    """
     anotaciones = Anotacion.objects.all().order_by('id_anotacion') #traemos todos los datos que hay en la tabla Anotacion
     data['object_list'] = anotaciones
+    return render(request, template_name, data)
+
+@login_required
+def listar_anotaciones_alumno(request, pk, template_name='anotacion/listar_anotacion_alumno.html'):
+    """
+    Lista de anotaciones
+    @param request: http request
+    @param pk: es el id del alumno
+    @param template_name nombre del template a utilizar
+    @return Despliega los alumnos existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+
+    data = {}
+    alumno = Alumno.objects.get(id_alumno=pk)
+    anotaciones = Anotacion.objects.filter(alumno=alumno)
+    data['object_list'] = anotaciones
+    data['id_alumno'] = pk
     return render(request, template_name, data)
 
 @login_required
@@ -51,13 +60,6 @@ def nueva_anotacion(request):
     alumnos = Alumno.objects.all()      #Traemos todos los alumnos
     data['alumnos'] = list(alumnos)
 
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    """for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-    creacion = permisos_asociados.crear_usuario
-    crear_usuarios = creacion
-
-    if crear_usuarios==True:"""
     if request.method=='POST':
         formulario = CrearAnotacionForm(request.POST)
         if formulario.is_valid():
@@ -75,6 +77,41 @@ def nueva_anotacion(request):
     data['formulario']=formulario
     data['alumnos'] = list(alumnos)
     return render_to_response('anotacion/nuevaanotacion.html', data, context_instance=RequestContext(request))
+
+
+@login_required
+def nueva_anotacion_alumno(request, pk):
+    """
+    Vista del formulario de creacion de anotaciones. Ver forms.py
+    @param request: http request
+    @param pk: id del alumno
+    Permite crear usuarios a partir de un formulario
+    @return Crea un usuario nuevo
+    +Además de crear un usuario se verifica que el usuario que trata de acceder a está funcionalidad tenga el permiso
+    correspondiente
+    """
+    data = {}
+    usuario_actual = request.user
+    alumno = Alumno.objects.get(id_alumno=pk)
+
+
+    if request.method=='POST':
+        formulario = CrearAnotacionForm(request.POST)
+        if formulario.is_valid():
+
+            form = formulario.save()
+            form.alumno=alumno
+            form.save()
+            id_anotacion=form.id_anotacion
+
+            return redirect('completar_agregar_anotacion_alumno', id_anotacion, pk)
+    else:
+        formulario = CrearAnotacionForm()
+
+    data['formulario']=formulario
+    data['id_alumno'] = pk
+
+    return render_to_response('anotacion/nueva_anotacion_alumno.html', data, context_instance=RequestContext(request))
 
 @login_required
 def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_anotacion.html'):
@@ -102,6 +139,40 @@ def completar_agregar_anotacion(request, pk, template_name='anotacion/completar_
         form.materia = id_materia
         form.save()
         return redirect('listar_anotacion')
+
+    data['formulario'] = form
+    return render(request, template_name, data)
+
+
+
+@login_required
+def completar_agregar_anotacion_alumno(request, pk, id_al, template_name='anotacion/completar_anotacion_alumno.html'):
+    """
+            @param request: http request
+            @param pk: id de la anotacion
+            @param id_al: id del alumno
+            @param template_name nombre del template a utilizar
+            @result se agrega materia y responsable de la anotacion
+    """
+    anotacion = Anotacion.objects.get(id_anotacion=pk)
+    curso=anotacion.alumno.curso
+    materia_del_curso=Materia_curso.objects.filter(curso=curso)
+
+    materias=[]
+    for i in materia_del_curso:
+        materias.append(i.materia)
+
+    data={}
+    data['materias'] = materias
+    data['anotacion'] = pk
+    data['id_al'] = id_al
+
+    form = AsignarMateriaForm(request.POST or None, instance=anotacion)
+    if form.is_valid():
+        id_materia = request.POST['materia']
+        form.materia = id_materia
+        form.save()
+        return redirect('listar_anotaciones_alumno', id_al)
 
     data['formulario'] = form
     return render(request, template_name, data)

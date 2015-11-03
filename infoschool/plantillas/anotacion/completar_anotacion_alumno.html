@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<!-- Barra de Título -->
+{% block title %}INFOSCHOOL! - Gestión de Anotación{% endblock %}
+
+<!-- Encabezado-->
+{% block header %}
+<h3 class="page-header">Registrar Anotación</h3>
+{% endblock %}
+
+<!-- Botones superiores -->
+{% block botones %}
+
+{% endblock %}
+
+
+<!-- Contenido -->
+{% block content %}
+    <div class="container">
+        <div class="col-md-5">
+
+            <form action="{% url 'completar_agregar_anotacion_alumno' anotacion id_al %}" method="POST" >{% csrf_token %}
+                <strong>Responsable:</strong>
+                <input class="form-control" type="text" placeholder="Nombre del responsable" name="responsable"/>
+                <br><br>
+                <strong>Materia:</strong>
+                <select name="materia" class="form-control">
+                    {% for mat in materias %}
+                        <option value="{{mat.id_materia}}"> {{mat.nombre}} </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+
+                <!-- boton Submit: Envia el formulario -->
+
+             <input type="submit" value="Guardar" />
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- SideBar -->
+{% block sidebar %}
+    <ul class="nav nav-sidebar">
+        <li><a type="button" href="{% url 'listar_anotaciones_alumno' id_al %}">Cancelar</a></li>
+    </ul>
+{% endblock %}
