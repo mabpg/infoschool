@@ -43,6 +43,27 @@ def listar_anotaciones_alumno(request, pk, template_name='anotacion/listar_anota
     anotaciones = Anotacion.objects.filter(alumno=alumno)
     data['object_list'] = anotaciones
     data['id_alumno'] = pk
+    data['alumno'] = False
+    return render(request, template_name, data)
+
+@login_required
+def listar_mis_anotaciones(request, template_name='anotacion/listar_anotacion_alumno.html'):
+    """
+    Lista de anotaciones
+    @param request: http request
+    @param template_name nombre del template a utilizar
+    @return Despliega los alumnos existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+
+    data = {}
+    usuario = request.user
+    alumno = Alumno.objects.get(usuario=usuario)
+    anotaciones = Anotacion.objects.filter(alumno=alumno)
+    data['object_list'] = anotaciones
+    data['alumno'] = True    #se utiliza para no mostrar el editar en el template listar_anotacion_alumno.html
+
     return render(request, template_name, data)
 
 @login_required

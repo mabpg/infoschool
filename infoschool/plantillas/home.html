@@ -44,7 +44,12 @@
 
             <li><a href="{% url 'listar_curso' %}">Cursos</a></li>
 
+        {% if admin %}
             <li><a href="{% url 'listar_anotacion' %}">Anotación</a></li>
+        {% endif %}
+        {% if alum %}
+            <li><a href="{% url 'listar_mis_anotaciones' %}">Mis anotaciones</a></li>
+        {% endif %}
 
 
     </ul>

@@ -22,12 +22,16 @@
 
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Alumno</th>
+                        {% ifnotequal alumno True %}
+                            <th>Alumno</th>
+                        {% endifnotequal %}
                         <th>Curso</th>
                         <th>Materia</th>
                         <th>Fecha</th>
                         <th>Responsable</th>
-                        <th>Editar</th>
+                        {% ifnotequal alumno True %}
+                            <th>Editar</th>
+                        {% endifnotequal %}
 
 
                     </tr>
@@ -38,13 +42,17 @@
                         <tr>
                             <td>{{ anotacion.nombre }}</td>
                             <td>{{ anotacion.descripcion}}</td>
-                            <td>{{ anotacion.alumno.usuario.nombre}}</td>
+                            {% ifnotequal alumno True %}
+                                <td>{{ anotacion.alumno.usuario.nombre}}</td>
+                            {% endifnotequal %}
                             <td>{{ anotacion.alumno.curso}}</td>
                             <td>{{ anotacion.materia }}</td>
                             <td>{{ anotacion.fecha }}</td>
                             <td>{{ anotacion.responsable }}</td>
 
+                        {% ifnotequal alumno True %}
                             <td><a href="{% url 'editar_anotacion_alumno' anotacion.id_anotacion id_alumno %}" class="btn btn-primary btn-sm" >editar</a></td>
+                        {% endifnotequal %}
 
 
                         </tr>
@@ -59,6 +67,10 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-        <li><a href="{% url 'nueva_anotacion_alumno' id_alumno %}">Agregar Anotacion</a></li>
+        {% ifnotequal alumno True %}
+            <li><a href="{% url 'nueva_anotacion_alumno' id_alumno %}">Agregar Anotacion</a></li>
+        {% else %}
+            <li><a href="{% url 'home_sistema' %}">Atras</a></li>
+        {% endifnotequal %}
     </ul>
 {% endblock %}
