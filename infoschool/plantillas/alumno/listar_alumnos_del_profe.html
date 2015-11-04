@@ -28,6 +28,7 @@
                         <th>Curso</th>
                         <th>Madre</th>
                         <th>Padre</th>
+                        <th>Anotaciones</th>
 
                     </tr>
                 </theader>
@@ -44,6 +45,7 @@
                             <td>{{ alumno.curso.nombre }}</td>
                             <th> -- </th>
                             <th> -- </th>
+                            <td><a href="{% url 'listar_anotaciones_alumno' alumno.id_alumno %}" class="btn btn-primary btn-sm btn-warning" >Anotaciones</a></td>
 
                         </tr>
                     {% endfor %}

@@ -34,6 +34,10 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
+    {% ifequal alumno True %}
+        <li><a type="button" href="{% url 'listar_anotaciones_alumno' id_al %}">Cancelar</a></li>
+    {% else %}
         <li><a type="button" href="{% url 'listar_anotacion' %}">Cancelar</a></li>
+    {% endifequal %}
     </ul>
 {% endblock %}

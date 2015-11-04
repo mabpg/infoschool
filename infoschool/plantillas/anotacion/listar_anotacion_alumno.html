@@ -28,7 +28,7 @@
                         <th>Fecha</th>
                         <th>Responsable</th>
                         <th>Editar</th>
-                        <th>Eliminar</th>
+
 
                     </tr>
                 </theader>
@@ -44,8 +44,8 @@
                             <td>{{ anotacion.fecha }}</td>
                             <td>{{ anotacion.responsable }}</td>
 
-                            <td><a href="{% url 'editar_anotacion' anotacion.id_anotacion %}" class="btn btn-primary btn-sm" >editar</a></td>
-                            <td><a href="{% url 'borrar_anotacion' anotacion.id_anotacion %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
+                            <td><a href="{% url 'editar_anotacion_alumno' anotacion.id_anotacion id_alumno %}" class="btn btn-primary btn-sm" >editar</a></td>
+
 
                         </tr>
                     {% endfor %}

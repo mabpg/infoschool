@@ -189,13 +189,6 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
 
 
     usuario_actual = request.user
-    """roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-        creacion = permisos_asociados.modificar_usuario
-
-    modificar_usuarios = creacion
-    if modificar_usuarios==True:"""
     anotacion = get_object_or_404(Anotacion, pk=pk)
     curso=anotacion.alumno.curso
     materia_del_curso=Materia_curso.objects.filter(curso=curso)
@@ -206,6 +199,7 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
 
     data={}
     data['materias'] = materias
+    data['alumno'] = False
 
     form = EditarAnotacionForm(request.POST or None, instance=anotacion)
     if form.is_valid():
@@ -215,6 +209,39 @@ def editar_anotacion(request, pk, template_name='anotacion/editar_anotacion.html
 
     data['formulario'] = form
     return render(request, template_name, data)
+
+@login_required
+def editar_anotacion_alumno(request, pk, id_al, template_name='anotacion/editar_anotacion.html'):
+    """
+        @param request: http request
+        @param pk: id de la anotacion modificar
+        @param id_al: id del alumno
+        @param template_name nombre del template a utilizar
+        @result Modifica los campos de una anotacion
+    """
+    usuario_actual = request.user
+    anotacion = get_object_or_404(Anotacion, pk=pk)
+    curso=anotacion.alumno.curso
+    materia_del_curso=Materia_curso.objects.filter(curso=curso)
+
+    materias=[]
+    for i in materia_del_curso:
+        materias.append(i.materia)
+
+    data={}
+    data['materias'] = materias
+    data['alumno'] = True
+    data['id_al'] = id_al
+
+    form = EditarAnotacionForm(request.POST or None, instance=anotacion)
+    if form.is_valid():
+
+        form.save()
+        return redirect('listar_anotaciones_alumno', id_al)
+
+    data['formulario'] = form
+    return render(request, template_name, data)
+
 
 @login_required
 def eliminar_anotacion(request, pk, template_name='anotacion/eliminar_anotacion.html'):

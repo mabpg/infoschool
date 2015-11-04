@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 
-from anotacion.views import listar_anotaciones, nueva_anotacion, editar_anotacion, eliminar_anotacion, completar_agregar_anotacion, listar_anotaciones_alumno, nueva_anotacion_alumno, completar_agregar_anotacion_alumno
+from anotacion.views import listar_anotaciones, nueva_anotacion, editar_anotacion, eliminar_anotacion, completar_agregar_anotacion, listar_anotaciones_alumno, nueva_anotacion_alumno, completar_agregar_anotacion_alumno, editar_anotacion_alumno
 
 
 urlpatterns = patterns('',
@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^nueva/anotacion/(?P<pk>\d+)$', nueva_anotacion_alumno, name='nueva_anotacion_alumno'),
     url(r'^nuevo$', nueva_anotacion, name='nueva_anotacion'),
     url(r'^editar/(?P<pk>\d+)$', editar_anotacion, name='editar_anotacion'),
+    url(r'^editar/anotacion/(?P<pk>\d+)/(?P<id_al>\d+)$', editar_anotacion_alumno, name='editar_anotacion_alumno'),
     url(r'^borrar/(?P<pk>\d+)$', eliminar_anotacion, name='borrar_anotacion'),
     url(r'^asignar/(?P<pk>\d+)$', completar_agregar_anotacion, name='completar_agregar_anotacion'),
     url(r'^asignar/(?P<pk>\d+)/(?P<id_al>\d+)$', completar_agregar_anotacion_alumno, name='completar_agregar_anotacion_alumno'),
