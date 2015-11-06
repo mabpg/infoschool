@@ -60,8 +60,7 @@ def recuperar_contrasenha(request):
     @param request: http request
     Funcion que se encarga de la remision de un correo de recuperación
     """
-    #if not request.user.is_anonymous():
-    #    return HttpResponseRedirect('/privado')
+
     if request.method == 'POST':
         formulario = RecuperarForm(request.POST)
         if formulario.is_valid:

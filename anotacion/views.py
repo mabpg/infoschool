@@ -274,24 +274,12 @@ def eliminar_anotacion(request, pk, template_name='anotacion/eliminar_anotacion.
     +Se permite la eliminación de una anotacion solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
     usuario_actual = request.user
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
-    """for i in roles_sistema_usuarios:
-        permisos_asociados = i.roles.permiso_sistema
-    creacion = permisos_asociados.eliminar_usuario
-    eliminar_usuarios = creacion
-    if eliminar_usuarios==True:"""
+
     server = get_object_or_404(Anotacion, pk=pk)
-    """lista_roles_sis = Usuario_Rol_Sistema.objects.filter(usuario = server) #vemos si existen roles de sistema asignado al usuario
-    lista_roles_proy = Usuario_Rol_Proyecto.objects.filter(usuario = server) #vemos si existen roles de proyecto asignado al usuario
-    count = lista_roles_sis.__len__()
-    count = count + lista_roles_proy.__len__()
-    if count == 0: #si count es igual a cero, entonces el usuario no posee roles asignados"""
+
     if request.method == 'POST':
         server.delete()
         return redirect('listar_anotacion')
-    """else:
-        mensaje = "El usuario tiene asignado roles y no puede ser eliminado"
-        return render_to_response('usuario/usuario_no_eliminado.html', {'object':mensaje}, context_instance=RequestContext(request))"""
 
     return render(request, template_name, {'object': server})
 

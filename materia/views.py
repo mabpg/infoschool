@@ -20,7 +20,6 @@ def listar_materias(request, template_name='materia/listar_materia.html'):
      permisos se muestran los botones a los que tiene acceso dicho usuario
     """
     usuario_actual = request.user
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
     data = {}
 
     materias = Materia.objects.all().order_by('id_materia') #traemos todos los datos que hay en la tabla Materia
@@ -129,7 +128,6 @@ def eliminar_materia(request, pk, template_name='materia/eliminar_materia.html')
     @result Elimina una materia
     +Se permite la eliminación de una materia solo si no está asociado a ningún proyecto (si no posee ningun rol)
     """
-    usuario_actual = request.user
 
     server = get_object_or_404(Materia, pk=pk)
 
