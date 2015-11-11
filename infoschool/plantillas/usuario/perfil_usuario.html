@@ -26,6 +26,9 @@
                         <th>Cédula</th>
                         <th>Teléfono</th>
                         <th>Dirección</th>
+                        {% ifequal curso True%}
+                            <th>Curso</th>
+                        {% endifequal %}
                         <th>Editar</th>
 
 
@@ -42,7 +45,9 @@
                             <td>{{ usuario.cedula }}</td>
                             <td>{{ usuario.telefono }}</td>
                             <td>{{ usuario.direccion }}</td>
-
+                            {% ifequal curso True%}
+                                <td>{{ alumno }}</td>
+                            {% endifequal %}
                             <td><a href="{% url 'editar_perfil' usuario.id_usuario %}" class="btn btn-primary btn-sm" >editar</a></td>
 
 

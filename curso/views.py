@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from curso.forms import CrearCursoForm, EditarCursoForm
 from curso.models import Curso
+from materia.models import Materia, Materia_curso
 
 
 @login_required
@@ -19,6 +20,45 @@ def listar_cursos(request, template_name='curso/listar_curso.html'):
     """
     data = {}
     cursos = Curso.objects.all().order_by('id_curso') #traemos todos los datos que hay en la tabla Curso
+    data['object_list'] = cursos
+    return render(request, template_name, data)
+
+
+@login_required
+def listar_cursos_del_profe(request, template_name='curso/listar_curso.html'):
+    """
+    Lista de cursos
+    @param request: http request
+    @param template_name nombre del template a utilizar
+    @return Despliega los alumnos existentes en el sistema con sus atributos
+    + Se verifican los roles y permisos de sistema asociados al usuario actual, y de acuerdo a estos
+     permisos se muestran los botones a los que tiene acceso dicho usuario
+    """
+    data = {}
+    usuario = request.user
+    materias = Materia.objects.exclude(profesor=usuario) #materias que no son del profesor
+
+    print('materias')
+    print(materias)
+    materias_curso = Materia_curso.objects.all()
+
+    print("materias curso 1")
+    print(materias_curso)
+
+    for i in materias:
+        materias_curso = materias_curso.exclude(materia=i)
+
+    print("materias curso")
+    print(materias_curso)
+
+    #armamos una lista con los cursos diferentes
+    cursos = []
+    for i in materias_curso:
+        if cursos.__contains__(i.curso)==0: #si la lista contiene ese curso entonces no el valor es 0
+            cursos.append(i.curso)
+
+
+    #cursos = Curso.objects.all().order_by('id_curso') #traemos todos los datos que hay en la tabla Curso
     data['object_list'] = cursos
     return render(request, template_name, data)
 
