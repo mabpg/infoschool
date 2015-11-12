@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from principal.forms import RecuperarForm, AutenticarForm
 from usuario.models import Usuario
-from materia.models import Materia
+
 
 def ingresar(request):
     """
@@ -65,7 +65,7 @@ def recuperar_contrasenha(request):
         formulario = RecuperarForm(request.POST)
         if formulario.is_valid:
             usuario = request.POST['nombre_de_usuario']
-            us = Usuario.objects.filter(nombre_usuario = usuario)
+            us = Usuario.objects.filter(nombre_usuario=usuario)
             if us.__len__() != 0:
                 if us[0].is_active:
                     #creamos un password aleatorio y lo guardamos
@@ -128,60 +128,6 @@ def home_sistema(request):
 
     template_name = 'home.html'
     return render(request, template_name, data)
-
-
-
-def recuperar_contrasenha(request):
-    """
-    Recuperar contraseña
-    @param request: http request
-    Funcion que se encarga de la remision de un correo de recuperación
-    """
-
-    if request.method == 'POST':
-        formulario = RecuperarForm(request.POST)
-        if formulario.is_valid:
-            usuario = request.POST['nombre_de_usuario']
-            us = Usuario.objects.filter(nombre_usuario=usuario)
-            if us.__len__() != 0:
-                if us[0].is_active:
-                    #creamos un password aleatorio y lo guardamos
-                    new_pass = Usuario.objects.make_random_password(length=15)
-                    us[0].set_password(new_pass)
-                    us[0].save()
-                    #enviamos el nuevo password al correo del usuario
-
-                    # Creamos el mensaje
-                    msg = MIMEText(new_pass)
-
-                    # Conexion con el server
-
-                    msg['Subject'] = new_pass
-                    msg['From'] = 'scrumbanpy@gmail.com'
-                    msg['To'] = us[0].correo_electronico
-
-                    # Autenticamos
-                    mailServer = smtplib.SMTP('smtp.gmail.com',587)
-                    mailServer.ehlo()
-                    mailServer.starttls()
-                    mailServer.ehlo()
-                    mailServer.login("scrumbanpy@gmail.com","mipassword")
-
-                    # Enviamos
-                    mailServer.sendmail("scrumbanpy@gmail.com", us[0].correo_electronico, msg.as_string())
-
-                    # Cerramos conexion
-                    mailServer.close()
-
-                    return render_to_response('autenticacion/password_enviado.html')
-                else:
-                    return render_to_response('autenticacion/noactivo.html')
-            else:
-                return render_to_response('autenticacion/noexiste.html')
-    else:
-        formulario = RecuperarForm()
-    return render_to_response('autenticacion/recuperar_contrasenha.html',{'formulario':formulario}, context_instance=RequestContext(request))
-
 
 
 

@@ -10,6 +10,7 @@ class Alumno (models.Model):
     fecha_nacimiento = models.DateTimeField(null=False)
 
     curso = models.ForeignKey(Curso, blank=True, null=True)
+    encargado = models.EmailField(max_length=50, blank=False) #papa o mama
     #padre = models.ForeignKey(Padre)
     #madre = models.ForeignKey(Padre)
 

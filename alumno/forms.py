@@ -22,13 +22,15 @@ class CrearAlumnoForm(forms.ModelForm):
     """
     class Meta:
         model = Alumno
-        fields = ('fecha_nacimiento', )
+        fields = ('fecha_nacimiento', 'encargado', )
         widgets = {
             #'usuario': forms.TextInput(attrs={'class': 'form-control', 'type': User, 'placeholder': 'Nombre de Usuario', 'id': 'inputUserName'}),
             'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Fecha de Nacimiento', 'id': 'inputUserName'}),
+            'encargado': forms.DateInput(attrs={'class': 'form-control', 'type': 'mail', 'placeholder': 'Correo electrónico del encargado', 'id': 'inputUserName'}),
+
         }
         labels = {
-            #'usuario': 'Nombre',
+            'encargado': 'Encargado',
             'fecha_nacimiento': 'Fecha de Nacimiento',
         }
 

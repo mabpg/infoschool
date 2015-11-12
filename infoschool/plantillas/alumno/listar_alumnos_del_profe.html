@@ -26,8 +26,7 @@
                         <th>Teléfono</th>
                         <th>Dirección</th>
                         <th>Curso</th>
-                        <th>Madre</th>
-                        <th>Padre</th>
+                        <th>Encargado</th>
                         <th>Anotaciones</th>
 
                     </tr>
@@ -43,8 +42,7 @@
                             <td>{{ alumno.usuario.telefono }}</td>
                             <td>{{ alumno.usuario.direccion }}</td>
                             <td>{{ alumno.curso.nombre }}</td>
-                            <th> -- </th>
-                            <th> -- </th>
+                             <th> {{ alumno.encargado }} </th>
                             <td><a href="{% url 'listar_anotaciones_alumno' alumno.id_alumno %}" class="btn btn-primary btn-sm btn-warning" >Anotaciones</a></td>
 
                         </tr>
