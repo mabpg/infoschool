@@ -38,18 +38,11 @@ def listar_cursos_del_profe(request, template_name='curso/listar_curso.html'):
     usuario = request.user
     materias = Materia.objects.exclude(profesor=usuario) #materias que no son del profesor
 
-    print('materias')
-    print(materias)
-    materias_curso = Materia_curso.objects.all()
 
-    print("materias curso 1")
-    print(materias_curso)
+    materias_curso = Materia_curso.objects.all()
 
     for i in materias:
         materias_curso = materias_curso.exclude(materia=i)
-
-    print("materias curso")
-    print(materias_curso)
 
     #armamos una lista con los cursos diferentes
     cursos = []
@@ -57,8 +50,8 @@ def listar_cursos_del_profe(request, template_name='curso/listar_curso.html'):
         if cursos.__contains__(i.curso)==0: #si la lista contiene ese curso entonces no el valor es 0
             cursos.append(i.curso)
 
+    data['profe']=True
 
-    #cursos = Curso.objects.all().order_by('id_curso') #traemos todos los datos que hay en la tabla Curso
     data['object_list'] = cursos
     return render(request, template_name, data)
 

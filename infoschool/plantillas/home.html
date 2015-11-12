@@ -45,8 +45,9 @@
         {% if admin %}
             <li><a href="{% url 'listar_curso' %}">Cursos</a></li>
         {% endif %}
-
+        {% if profe %}
             <li><a href="{% url 'listar_cursos_del_profe' %}">Mis Cursos</a></li>
+        {% endif %}
         {% if admin %}
             <li><a href="{% url 'listar_anotacion' %}">Anotación</a></li>
         {% endif %}

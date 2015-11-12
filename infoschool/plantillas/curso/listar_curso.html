@@ -24,8 +24,10 @@
                         <th>Sección</th>
                         <th>Turno</th>
                         <th>Especialidad</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        {% ifnotequal profe True %}
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        {% endifnotequal %}
 
                     </tr>
                 </theader>
@@ -38,9 +40,10 @@
                             <td>{{ curso.turno }}</td>
                             <td>{{ curso.especialidad }}</td>
 
-
+                            {% ifnotequal profe True %}
                                 <td><a href="{% url 'editar_curso' curso.id_curso %}" class="btn btn-primary btn-sm" >editar</a></td>
                                 <td><a href="{% url 'borrar_curso' curso.id_curso %}" class="btn btn-primary btn-sm btn-warning" >Eliminar</a></td>
+                            {% endifnotequal %}
 
                         </tr>
                     {% endfor %}
@@ -54,8 +57,11 @@
 <!-- SideBar -->
 {% block sidebar %}
     <ul class="nav nav-sidebar">
-
+        {% ifnotequal profe True %}
             <li><a href="{% url 'nuevo_curso' %}">Agregar Curso</a></li>
+        {% else %}
+            <li><a href="{% url 'home_sistema' %}">Atras</a></li>
+        {% endifnotequal %}
 
     </ul>
 {% endblock %}

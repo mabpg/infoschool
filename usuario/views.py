@@ -36,14 +36,14 @@ def perfil_usuario(request, template_name='usuario/perfil_usuario.html'):
      permisos se muestran los botones a los que tiene acceso dicho usuario
     """
     usuario_actual = request.user
-    #roles_sistema_usuarios = list(Usuario_Rol_Sistema.objects.filter(usuario=usuario_actual)) #traemos todos los roles de sistema que se han asignado al usuario en cuestion
+
     data = {}
     usuario = Usuario.objects.get(id_usuario=usuario_actual.id_usuario) #traemos todos los datos que hay en la tabla Usuarios
 
     if usuario.clase=="Alumno" and usuario.is_admin==False:
         alumno = Alumno.objects.get(usuario=usuario)
         data['curso'] = True
-        data['alumno'] = alumno.curso.nombre+' '+alumno.curso.especialidad
+        data['alumno'] = alumno.curso.nombre+' '+alumno.curso.seccion+' '+alumno.curso.especialidad
 
     data['usuario'] = usuario
     return render(request, template_name, data)
