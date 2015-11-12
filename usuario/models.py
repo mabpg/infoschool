@@ -48,7 +48,7 @@ class Usuario(AbstractBaseUser):
     cedula = models.CharField(max_length=30, blank=False, unique=True)
     telefono = models.CharField(max_length=15, blank=True)
     direccion = models.CharField(max_length=55, blank=False)
-    #roles
+
     clase = models.CharField(max_length=15,
                               choices=CLASE,
                               default='Administrador')
