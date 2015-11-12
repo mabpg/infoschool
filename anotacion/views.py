@@ -159,6 +159,35 @@ def nueva_anotacion_alumno(request, pk):
             form.save()
             id_anotacion=form.id_anotacion
 
+            #-- Seccion de Notificaciones
+
+            # Creamos el mensaje
+
+            mensaje = 'Su hijo ha sido anotado en el registro. Ingrese al sistema para más información'
+
+            msg = MIMEText(mensaje)
+
+            # Conexion con el server
+
+            msg['Subject'] = mensaje
+            msg['From'] = 'scrumbanpy@gmail.com'
+            msg['To'] = alumno.encargado                  #obtenemos el correo del encargado
+
+            # Autenticamos
+            mailServer = smtplib.SMTP('smtp.gmail.com',587)
+            mailServer.ehlo()
+            mailServer.starttls()
+            mailServer.ehlo()
+            mailServer.login("scrumbanpy@gmail.com","mipassword")
+
+            # Enviamos
+            mailServer.sendmail("scrumbanpy@gmail.com", alumno.encargado, msg.as_string())
+
+            # Cerramos conexion
+            mailServer.close()
+            #fin de notificaciones
+
+
             return redirect('completar_agregar_anotacion_alumno', id_anotacion, pk)
     else:
         formulario = CrearAnotacionForm()
